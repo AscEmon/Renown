@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: AppRoutes.AppRoutesList(),
-      title: 'Trainning Info',
+      title: 'Trainning',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primaryColor: Colors.white,

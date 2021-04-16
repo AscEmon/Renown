@@ -30,6 +30,11 @@ dependencies:
   cupertino_icons: ^1.0.0
   get: ^3.22.2
   http: ^0.12.2
+  chewie: ^0.12.0
+  dio: ^3.0.10
+  video_player: ^1.0.1
+  animated_text_kit: ^3.1.0
+  carousel_slider: ^2.3.2
 
   
 
