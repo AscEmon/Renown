@@ -121,9 +121,9 @@ class _SplashPageState extends State<SplashPage> {
                         animatedTexts: [
                           FadeAnimatedText(
                             'Trainning',
-                            duration: Duration(milliseconds: 1700),
+                            duration: Duration(milliseconds: 1900),
                             textStyle: TextStyle(
-                              fontSize: 30,
+                              fontSize: 24,
                               fontWeight: FontWeight.w700,
                             ),
                           ),

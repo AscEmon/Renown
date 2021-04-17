@@ -19,8 +19,11 @@ class MyApiClient {
          String jsonResponseString=response.body;
          print(response.body);
          return categoryModelFromJson(jsonResponseString);
-      } else
-        print('Please check your internet Connnection');
+      } else{
+        print(response.statusCode);
+        print(response.body);
+      }
+        
     } catch (_) {}
   }
 

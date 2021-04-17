@@ -1,3 +1,4 @@
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/LiveChat.dart';
 import 'package:TrainnigInfo/Views/Screens/SubscriptionPage.dart';
 import 'package:get/get.dart';
 import '../../Views/Screens/HomePage.dart';
@@ -13,6 +14,7 @@ class AppRoutes {
   static String HOMEPAGE = "HomePage";
   static String SUBSCRIPTION = "Subscription";
   static String PACKAGES = "Packages";
+  static String LIVECHAT = "LiveChat";
 
   static List<GetPage> AppRoutesList() {
     return [
@@ -22,6 +24,7 @@ class AppRoutes {
       GetPage(name: HOMEPAGE, page: () => HomePage()),
       GetPage(name: SUBSCRIPTION, page: () => SubscriptionPage()),
       GetPage(name: PACKAGES, page: () => Packages()),
+      GetPage(name: LIVECHAT, page: () => WebSocketDemo()),
     ];
   }
 }

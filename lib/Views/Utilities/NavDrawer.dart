@@ -74,7 +74,7 @@ class NavDrawer extends StatelessWidget {
                     navIcon: Icons.chat,
                     navTitle: 'Live Chat',
                     onNavPress: () {
-                      // Get.toNamed(AppRoutes.FAVOURITE);
+                      //Get.toNamed(AppRoutes.LIVECHAT);
                     },
                   ),
                   NavDrawerTile(

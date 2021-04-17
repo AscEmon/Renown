@@ -11,8 +11,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Container(child: Text("Subscription Page")),
-    ));
+      child: Scaffold(
+        body: Container(child: Text("Subscription Page")),
+      ),
+    );
   }
 }
