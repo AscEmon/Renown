@@ -1,9 +1,15 @@
+import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
+import '../../main.dart';
 import '../Widget/NavDrawerTile.dart';
 
 class NavDrawer extends StatelessWidget {
+  final MyRepository myRepository =
+      MyRepository(apiClient: MyApiClient(httpClient: Client()));
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -78,18 +84,37 @@ class NavDrawer extends StatelessWidget {
                     },
                   ),
                   NavDrawerTile(
+                    navIcon: Icons.admin_panel_settings,
+                    navTitle: 'Admin',
+                    onNavPress: () {
+                      Get.toNamed(AppRoutes.DASHBOARD);
+                    },
+                  ),
+                  NavDrawerTile(
                     navIcon: Icons.logout,
                     navTitle: 'Logout',
                     onNavPress: () async {
-                      // try {
-                      //   Get.defaultDialog(
-                      //       title: "Logout",
-                      //       middleText: "Are you sure, You want to Logout?",
-                      //       onConfirm: () async {},
-                      //       onCancel: () {
-                      //         Get.back();
-                      //       });
-                      // } catch (e) {}
+                      try {
+                        Get.defaultDialog(
+                            title: "Logout",
+                            middleText: "Are you sure, You want to Logout?",
+                            textConfirm: "yes",
+                            textCancel: "No",
+                            cancelTextColor: Colors.red,
+                            buttonColor: Colors.green,
+                            onConfirm: () async {
+                              bool logout = await myRepository.logOutPost();
+                              if (logout == true) {
+                                print(userMap["data"]["email"]);
+                                await prefss.remove("userInfo");
+                                Get.offAndToNamed(AppRoutes.LOGIN);
+                                print(userMap["data"]["email"]);
+                              } else {}
+                            },
+                            onCancel: () {
+                              Get.back();
+                            });
+                      } catch (e) {}
                     },
                   ),
                 ],

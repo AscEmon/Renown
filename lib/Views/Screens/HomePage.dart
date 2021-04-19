@@ -1,5 +1,7 @@
 import 'package:TrainnigInfo/Model/Check.dart';
+import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/NavDrawer.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -18,7 +20,6 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          // leading: Icon(Icons.menu_open_rounded,color: Colors.white,),
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.black,
           title: Text(
@@ -27,6 +28,25 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.forum),
+              onPressed: () {
+                print(userMap["data"]["email"]);
+                Get.toNamed(AppRoutes.FORUM);
+              },
+            )
+          ],
+        ),
+        floatingActionButton: InkWell(
+          onTap: (){
+            Get.toNamed(AppRoutes.PICTUREPAGE);
+          },
+          child: CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.black,
+            child: Icon(Icons.add_a_photo, color: Colors.white),
+          ),
         ),
         drawer: NavDrawer(),
         body: Container(

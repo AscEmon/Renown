@@ -37,6 +37,8 @@ dependencies:
   carousel_slider: ^2.3.2
   web_socket_channel: ^1.2.0
   flutter_socket_io: ^0.6.0
+  shared_preferences: ^0.5.12+4
+  file_picker: ^2.1.4
 
   
 

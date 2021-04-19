@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Controller/LoginController.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:http/http.dart' as http;
+import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
+
+
+
+//flag for AdminCheck which is Globally declare
+bool adminCheck = false;
+
+
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -11,7 +21,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<LoginPage> {
-  LogInController logInController = Get.find<LogInController>();
+  final LogInController logInController = Get.put(LogInController(
+      repository:
+          MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,10 +65,17 @@ class _SignUpPageState extends State<LoginPage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              // Positioned(
-              //     top: 120,
-              //     left: Get.width / 2 - 60,
-              //     child: ),
+              Positioned(
+                top: 60,
+                left: Get.width / 2 - 40,
+                child: Text(
+                  "Log In",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               Positioned(
                 top: Get.height / 5,
                 left: Get.width / 20,
@@ -69,7 +89,7 @@ class _SignUpPageState extends State<LoginPage> {
                       BoxShadow(
                         color: Colors.grey,
                         offset: Offset(0.0, 1.0),
-                        blurRadius: 6.0,
+                        blurRadius: 10.0,
                       ),
                     ],
                   ),
@@ -81,16 +101,23 @@ class _SignUpPageState extends State<LoginPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Log In",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(height: 60),
+                            // Text("Log In",
+                            //     style: TextStyle(
+                            //         color: Colors.white,
+                            //         fontSize: 32,
+                            //         fontWeight: FontWeight.bold)),
+                            Image.asset(
+                              'images/Renown_logo.png',
+                              height: 100,
+                              width: 300,
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(height: 10),
                             TextFormField(
                               maxLines: 1,
                               controller: logInController.emailLogin,
                               cursorColor: Colors.white,
+                              keyboardType: TextInputType.emailAddress,
                               style: TextStyle(color: Colors.white),
                               decoration: new InputDecoration(
                                 labelText: 'Email',
@@ -153,9 +180,37 @@ class _SignUpPageState extends State<LoginPage> {
                               validator: (value) {
                                 if (value.trim().isEmpty)
                                   return "Password is Required";
+                                else if (value.length < 6)
+                                  return "password must be at least 6 characters";
                                 else
                                   return null;
                               },
+                            ),
+
+                            Theme(
+                              data: ThemeData(
+                                  unselectedWidgetColor: Colors.white),
+                              child: CheckboxListTile(
+                                activeColor: Colors.white,
+                                checkColor: Colors.green,
+                                title: Text(
+                                  "Admin",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                value: adminCheck,
+                                onChanged: (newValue) {
+                                  setState(
+                                    () {
+                                      adminCheck = newValue;
+                                    },
+                                  );
+                                },
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                              ),
                             ),
                             SizedBox(
                               height: 40,
@@ -170,12 +225,12 @@ class _SignUpPageState extends State<LoginPage> {
                                     fontSize: 20),
                               ),
                               onPressed: () {
-                                logInController.loginFunction();
+                                logInController.loginFunction(adminCheck);
                                 FocusScope.of(context).unfocus();
                               },
                             ),
                             SizedBox(
-                              height: 130,
+                              height: 150,
                             ),
                           ],
                         ),

@@ -10,6 +10,7 @@ class Packages extends StatefulWidget {
   }
 }
 
+
 class _PackagesState extends State<Packages> {
   final CarouselController _controller = CarouselController();
   final CheckController _checkController = Get.put(CheckController());
@@ -32,7 +33,7 @@ class _PackagesState extends State<Packages> {
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.black),
-      body: Container(
+         body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

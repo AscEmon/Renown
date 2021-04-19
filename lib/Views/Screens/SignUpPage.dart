@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:TrainnigInfo/Controller/SignUpController.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:http/http.dart' as http;
+import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -10,7 +13,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  SignUpController signUpController = Get.find<SignUpController>();
+  final SignUpController signUpController = Get.put(SignUpController(
+      repository:
+          MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +35,22 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 60,
+                  height: 16,
+                ),
+                Text(
+                  "Sign Up",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Container(
-                    height: 580,
+                    height: Get.height / 1.22,
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -52,19 +67,26 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Container(
-                          height: 400,
+                          height: 420,
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: 2),
-                                Text("Sign Up",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold)),
-                                SizedBox(height: 40),
+                                Image.asset(
+                                  'images/Renown_logo.png',
+                                  height: 100,
+                                  width: 300,
+                                  fit: BoxFit.contain,
+                                ),
+                                // Text(
+                                //   "Sign Up",
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontSize: 32,
+                                //       fontWeight: FontWeight.bold),
+                                // ),
+
                                 TextFormField(
                                   maxLines: 1,
                                   controller:
@@ -99,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       return null;
                                   },
                                 ),
-                                SizedBox(height: 16),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   maxLines: 1,
                                   controller:
@@ -137,43 +159,43 @@ class _SignUpPageState extends State<SignUpPage> {
                                       return null;
                                   },
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
-                                  maxLines: 1,
-                                  controller:
-                                      signUpController.phoneControllerSingUp,
-                                  cursorColor: Colors.white,
-                                  keyboardType: TextInputType.phone,
-                                  style: TextStyle(color: Colors.white),
-                                  decoration: new InputDecoration(
-                                    labelText: 'Phone Number',
-                                    labelStyle: TextStyle(color: Colors.white),
-                                    suffixIcon: Icon(
-                                      Icons.phone,
-                                      color: Colors.white,
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value.trim().isEmpty)
-                                      return "Phone Number is Required";
-                                    else
-                                      return null;
-                                  },
-                                ),
-                                SizedBox(height: 16),
+                                // SizedBox(height: 8),
+                                // TextFormField(
+                                //   maxLines: 1,
+                                //   controller:
+                                //       signUpController.phoneControllerSingUp,
+                                //   cursorColor: Colors.white,
+                                //   keyboardType: TextInputType.phone,
+                                //   style: TextStyle(color: Colors.white),
+                                //   decoration: new InputDecoration(
+                                //     labelText: 'Phone Number',
+                                //     labelStyle: TextStyle(color: Colors.white),
+                                //     suffixIcon: Icon(
+                                //       Icons.phone,
+                                //       color: Colors.white,
+                                //     ),
+                                //     focusedBorder: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.circular(10.0),
+                                //       borderSide: BorderSide(
+                                //         color: Colors.white,
+                                //       ),
+                                //     ),
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.circular(10.0),
+                                //       borderSide: BorderSide(
+                                //         color: Colors.white,
+                                //         width: 1.0,
+                                //       ),
+                                //     ),
+                                //   ),
+                                //   validator: (value) {
+                                //     if (value.trim().isEmpty)
+                                //       return "Phone Number is Required";
+                                //     else
+                                //       return null;
+                                //   },
+                                // ),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   maxLines: 1,
                                   obscureText: true,
@@ -205,11 +227,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                   validator: (value) {
                                     if (value.trim().isEmpty)
                                       return "Password is Required";
+                                    else if (value.length < 6)
+                                      return "password must be at least 6 characters";
                                     else
                                       return null;
                                   },
                                 ),
-                                SizedBox(height: 16),
+                                SizedBox(height: 8),
                                 TextFormField(
                                   maxLines: 1,
                                   obscureText: true,
@@ -249,7 +273,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   },
                                 ),
                                 SizedBox(
-                                  height: 16,
+                                  height: 8,
                                 ),
                                 RaisedButton(
                                   color: Colors.white,
@@ -260,13 +284,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
                                   ),
-                                  onPressed: () {
-                                    signUpController.signUpFunction();
+                                  onPressed: () async {
+                                    await signUpController.signUpFunction();
                                     FocusScope.of(context).unfocus();
                                   },
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 40,
                                 ),
                               ],
                             ),

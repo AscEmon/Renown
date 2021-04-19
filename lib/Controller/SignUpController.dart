@@ -1,8 +1,11 @@
+
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
-
+  MyRepository repository;
+ SignUpController({@required this.repository});
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameControllerSingUp =
       new TextEditingController();
@@ -14,17 +17,20 @@ class SignUpController extends GetxController {
       new TextEditingController();
   final TextEditingController confirmPasswordControllerSingUp =
       new TextEditingController();
-
-
-
-  signUpFunction()async
-  {
-    if(formKey.currentState.validate())
-    {
+  String name = "";
+  String email = "";
+  String password = "";
+  
+  signUpFunction() async {
+    if (formKey.currentState.validate()) {
       print(nameControllerSingUp.text);
       print(emailControllerSingUp.text);
       print(phoneControllerSingUp.text);
       print(passwordControllerSingUp.text);
+      name = nameControllerSingUp.text;
+      email = emailControllerSingUp.text;
+      password = passwordControllerSingUp.text;
+      await repository.signUpPost(name, email, password);
       nameControllerSingUp.clear();
       emailControllerSingUp.clear();
       phoneControllerSingUp.clear();
@@ -33,7 +39,4 @@ class SignUpController extends GetxController {
     }
     update();
   }
-
-  
-
 }

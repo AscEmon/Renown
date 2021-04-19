@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:TrainnigInfo/Controller/LoginController.dart';
 import 'package:TrainnigInfo/Controller/SignUpController.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
@@ -14,6 +15,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  MyRepository myRepository;
   @override
   void initState() {
     super.initState();
@@ -50,9 +52,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void navigationPage() async {
-    Get.put(SignUpController(), permanent: true);
-    Get.put(LogInController(), permanent: true);
-
     try {
       Get.offAndToNamed(AppRoutes.LOGIN);
     } catch (e) {
@@ -120,7 +119,7 @@ class _SplashPageState extends State<SplashPage> {
                         totalRepeatCount: 1,
                         animatedTexts: [
                           FadeAnimatedText(
-                            'Trainning',
+                            'RENOWN',
                             duration: Duration(milliseconds: 1900),
                             textStyle: TextStyle(
                               fontSize: 24,
