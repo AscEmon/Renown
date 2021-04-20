@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
 import 'package:TrainnigInfo/Model/LoginModel.dart';
 import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
@@ -9,8 +9,13 @@ import 'package:get/get.dart';
 import '../Model/CategoryModel.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
-import '../main.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
+
+
+
+
+
 
 const baseUrl =
     'https://app.ringersoft.com/api/ringersoftfoodapp/test-category/2?fbclid=IwAR3OfylOShIlzWs7pQEt5kLSyBfQhLrjhlWcbA4P6GIr-GUj0WDQaDgjTd0';
@@ -64,7 +69,9 @@ class MyApiClient {
       String responseString;
       if (response.statusCode == 200) {
         responseString = response.body;
-        prefss.setString("userInfo", responseString);
+        print(responseString);
+        userprefs.setBool("loginStatus", true);
+        userprefs.setString("userInfos", responseString);
         Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return singUpModelFromJson(responseString);
       } else {
@@ -95,7 +102,9 @@ class MyApiClient {
       String responseString;
       if (response.statusCode == 200) {
         responseString = response.body;
-        prefss.setString("userInfo", responseString);
+        print(responseString);
+        userprefs.setBool("loginStatus", true);
+        userprefs.setString("userInfos", responseString);
         Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return loginModelFromJson(responseString);
       } else if (response.statusCode == 401) {
@@ -140,5 +149,67 @@ class MyApiClient {
       print("logOut ::: ${e.toString()}");
     }
     return null;
+  }
+
+//this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Page
+  Future<bool> adminPackagesPost(String title, String price, String description,
+      String active, File image) async {
+    print("apiProvider adminPackages");
+    print(title);
+    print(price);
+    print(description);
+    print(active);
+    print(image);
+
+    try {
+      // Dio dio = Dio();
+
+      // FormData formData = FormData.fromMap({
+      //   "name": "wendux",
+      //   "age": 25,
+      //   "other": "params",
+      // });
+      // var response = await dio.post(AppRoutes.ADMINPACKAGES,
+      //     data: formData, options: Options(headers: header2()));
+      // if (response.statusCode == 200) {
+      //   print("postAJobAndLeadPost  Done");
+      //   print(response.data);
+      //   return true;
+      // } else {
+      //   print(response.statusCode);
+      //   print(response.data);
+      //   return false;
+      // }
+    } catch (e) {
+      print("Adminpackages ${e.toString()}");
+    }
+    //   try {
+    //     final response = await httpClient.post(
+    //       AppUrl.adminPackagesUrl,
+    //       headers: header2(),
+    //       body: {
+    //         "title": title,
+    //         "price": price,
+    //         "description": description,
+    //         "active": active,
+    //         "image": image
+    //       },
+    //     );
+    //     print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+    //     String responseString;
+    //     if (response.statusCode == 200) {
+    //       responseString = response.body;
+    //       print(responseString);
+    //       return true;
+    //     } else {
+    //       print(response.statusCode);
+    //       print(response.body);
+    //       return false;
+    //     }
+    //   } catch (e) {
+    //     print("AdminPackages ::: ${e.toString()}");
+    //   }
+    //   return null;
+    // }
   }
 }

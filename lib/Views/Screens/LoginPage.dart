@@ -200,7 +200,7 @@ class _SignUpPageState extends State<LoginPage> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                value: adminCheck,
+                                value: adminCheck ?? false,
                                 onChanged: (newValue) {
                                   setState(
                                     () {

@@ -1,3 +1,4 @@
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/Dashboard.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
@@ -24,8 +25,8 @@ class AppRoutes {
   static String FORUM = "Forum";
   static String STATUS = "Status";
   static String COMMENTPAGE = "CommentPage";
-   static String PICTUREPAGE = "PicturePage";
-
+  static String PICTUREPAGE = "PicturePage";
+  static String ADMINPACKAGES = "AdminPackages";
   static List<GetPage> AppRoutesList() {
     return [
       GetPage(name: INITIAL, page: () => SplashPage()),
@@ -40,6 +41,7 @@ class AppRoutes {
       GetPage(name: STATUS, page: () => StatusPage()),
       GetPage(name: COMMENTPAGE, page: () => CommentPage()),
       GetPage(name: PICTUREPAGE, page: () => PicturePage()),
+      GetPage(name: ADMINPACKAGES, page: () => AdminPackages()),
     ];
   }
 }

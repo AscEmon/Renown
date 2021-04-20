@@ -1,7 +1,10 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
+import 'package:TrainnigInfo/Controller/PictureTakeController.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class PicturePage extends StatefulWidget {
   PicturePage({Key key}) : super(key: key);
@@ -11,7 +14,42 @@ class PicturePage extends StatefulWidget {
 }
 
 class _PicturePageState extends State<PicturePage> {
-  List<PlatformFile> filepick = [];
+  final PictureTakeController pictureTakeController = Get.put(
+      PictureTakeController(
+          repository:
+              MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(Icons.photo_library),
+                    title: new Text('Photo Library'),
+                    onTap: () {
+                      pictureTakeController.imgFromGallery();
+                      Navigator.of(context).pop();
+                    }),
+                new ListTile(
+                  leading: new Icon(Icons.photo_camera),
+                  title: new Text('Camera'),
+                  onTap: () {
+                    pictureTakeController.imgFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,27 +79,31 @@ class _PicturePageState extends State<PicturePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  child: filepick.isEmpty
-                      ? Container(
-                          height: 300,
-                          width: 200,
-                          color: Colors.black,
-                          child: Icon(
-                            Icons.image,
-                            color: Colors.white,
-                            size: 60,
-                          ),
-                        )
-                      : Card(
-                          elevation: 8,
-                          child: Image.file(
-                            File(filepick[0].path),
-                            height: 300,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                GetBuilder<PictureTakeController>(
+                  builder: (pictureTakeController) {
+                    return Container(
+                      child: pictureTakeController.profile == null
+                          ? Container(
+                              height: 300,
+                              width: 200,
+                              color: Colors.grey,
+                              child: Icon(
+                                Icons.image,
+                                color: Colors.white,
+                                size: 60,
+                              ),
+                            )
+                          : Card(
+                              elevation: 8,
+                              child: Image.file(
+                                File(pictureTakeController.profile.path),
+                                height: 300,
+                                width: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    );
+                  },
                 ),
                 RaisedButton(
                   child: Text(
@@ -71,8 +113,8 @@ class _PicturePageState extends State<PicturePage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () async {
-                    await filePick();
+                  onPressed: () {
+                    _showPicker(context);
                   },
                 ),
                 RaisedButton(
@@ -83,9 +125,7 @@ class _PicturePageState extends State<PicturePage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () async {
-                    await filePick();
-                  },
+                  onPressed: () async {},
                 )
               ],
             ),
@@ -95,29 +135,29 @@ class _PicturePageState extends State<PicturePage> {
     );
   }
 
-  Future<void> filePick() async {
-    FilePickerResult result =
-        await FilePicker.platform.pickFiles(allowMultiple: false);
+  // Future<void> filePick() async {
+  //   FilePickerResult result =
+  //       await FilePicker.platform.pickFiles(allowMultiple: false);
 
-    if (result != null) {
-      print("results");
-      filepick = result.files.toList();
-      print(File(filepick[0].path));
-      //  files = result.paths.map((path) => File(path)).toList();
-      filepick.forEach(
-        (files) {
-          setState(
-            () {
-              // selectedFileList.add(File(files.path));
-              // fileShow.add(files.name);
-              //singlefile =File(files.path);
-              print(File(files.path));
-            },
-          );
-        },
-      );
-    } else {
-      // User canceled the picker
-    }
-  }
+  //   if (result != null) {
+  //     print("results");
+  //     filepick = result.files.toList();
+  //     print(File(filepick[0].path));
+  //     //  files = result.paths.map((path) => File(path)).toList();
+  //     filepick.forEach(
+  //       (files) {
+  //         setState(
+  //           () {
+  //             // selectedFileList.add(File(files.path));
+  //             // fileShow.add(files.name);
+  //             //singlefile =File(files.path);
+  //             print(File(files.path));
+  //           },
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     // User canceled the picker
+  //   }
+  // }
 }

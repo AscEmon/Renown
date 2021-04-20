@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.black,
           title: Text(
-            "Trainning",
+            "Renown",
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),

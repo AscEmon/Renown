@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../ApiProvider/ApiProvider.dart';
 import 'package:meta/meta.dart';
 
@@ -21,6 +23,9 @@ signUpPost(String name,String email,String password){
 }
 logOutPost(){
   return apiClient.logOutPost();
+}
+adminPackages(String title,String price,String description,String active,File image){
+  return apiClient.adminPackagesPost(title, price, description, active, image);
 }
 
 }

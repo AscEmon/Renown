@@ -31,7 +31,6 @@ dependencies:
   get: ^3.22.2
   http: ^0.12.2
   chewie: ^0.12.0
-  dio: ^3.0.10
   video_player: ^1.0.1
   animated_text_kit: ^3.1.0
   carousel_slider: ^2.3.2
@@ -39,6 +38,11 @@ dependencies:
   flutter_socket_io: ^0.6.0
   shared_preferences: ^0.5.12+4
   file_picker: ^2.1.4
+  image_picker: ^0.6.7+22
+  dio: ^3.0.9
+  
+  
+
 
   
 

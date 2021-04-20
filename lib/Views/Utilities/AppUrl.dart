@@ -6,4 +6,5 @@ class AppUrl {
   static String logoutUrl = "$baseUrl/auth/logout";
   static String adminLoginUrl = "$baseUrl/admin/login";
   static String adminLogOutUrl = "$baseUrl/admin/logout";
+  static String adminPackagesUrl = "$baseUrl/admin/package ";
 }

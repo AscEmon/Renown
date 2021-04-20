@@ -18,6 +18,7 @@ class LogInController extends GetxController {
       await repository.loginPost(amdminCheck,emailLogin.text, passwordLogin.text);
       emailLogin.clear();
       passwordLogin.clear();
+      adminCheck =false;
     } else {}
     update();
   }

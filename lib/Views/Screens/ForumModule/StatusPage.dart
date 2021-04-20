@@ -37,17 +37,27 @@ class _StatusPageState extends State<StatusPage> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: InkWell(
-                    onTap: (){
+                    onTap: () {
                       saveData();
                     },
-                      child: Card(
-                    elevation: 8,
-                    child: Container(
+                    child: Card(
+                      elevation: 8,
+                      child: Container(
                         color: Colors.blue,
                         height: 40,
                         width: Get.width,
-                        child: Center(child: Text("Post",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),))),
-                  )),
+                        child: Center(
+                          child: Text(
+                            "Post",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 )
               ],
             ),
@@ -58,9 +68,9 @@ class _StatusPageState extends State<StatusPage> {
   }
 
   void saveData() {
-    // List postList=[];
-    // postList.add(forumTextController.text);
-    prefss.setString("Post", forumTextController.text);
+    List postList = [];
+    postList.add(forumTextController.text);
+    userprefs.setString("Post", forumTextController.text);
     forumTextController.clear();
   }
 }
