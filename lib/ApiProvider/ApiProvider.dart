@@ -5,12 +5,13 @@ import 'package:TrainnigInfo/Model/LoginModel.dart';
 import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as GETX;
 import '../Model/CategoryModel.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 
 
@@ -72,12 +73,12 @@ class MyApiClient {
         print(responseString);
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
-        Get.offAndToNamed(AppRoutes.HOMEPAGE);
+       GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return singUpModelFromJson(responseString);
       } else {
         print(response.statusCode);
         print(response.body);
-        Get.snackbar("Error", response.body);
+       GETX.Get.snackbar("Error", response.body);
       }
     } catch (e) {
       print("SignUp ::: ${e.toString()}");
@@ -105,14 +106,14 @@ class MyApiClient {
         print(responseString);
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
-        Get.offAndToNamed(AppRoutes.HOMEPAGE);
+       GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return loginModelFromJson(responseString);
       } else if (response.statusCode == 401) {
         print(response.statusCode);
         print(response.body);
         responseString = response.body;
         Map<String, dynamic> showError = jsonDecode(responseString);
-        Get.snackbar("Error", showError["error"],
+        GETX.Get.snackbar("Error", showError["error"],
             backgroundColor: Colors.red, colorText: Colors.white);
       } else {
         print(response.statusCode);
@@ -162,24 +163,24 @@ class MyApiClient {
     print(image);
 
     try {
-      // Dio dio = Dio();
-
-      // FormData formData = FormData.fromMap({
-      //   "name": "wendux",
-      //   "age": 25,
-      //   "other": "params",
-      // });
-      // var response = await dio.post(AppRoutes.ADMINPACKAGES,
-      //     data: formData, options: Options(headers: header2()));
-      // if (response.statusCode == 200) {
-      //   print("postAJobAndLeadPost  Done");
-      //   print(response.data);
-      //   return true;
-      // } else {
-      //   print(response.statusCode);
-      //   print(response.data);
-      //   return false;
-      // }
+      Dio dio = Dio();
+    
+      FormData formData = FormData.fromMap({
+        "name": "wendux",
+        "age": 25,
+        "other": "params",
+      });
+      var response = await dio.post(AppRoutes.ADMINPACKAGES,
+          data: formData, options: Options(headers: header2()));
+      if (response.statusCode == 200) {
+        print("postAJobAndLeadPost  Done");
+        print(response.data);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.data);
+        return false;
+      }
     } catch (e) {
       print("Adminpackages ${e.toString()}");
     }
