@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ class AdminPackageController extends GetxController {
   bool active;
   String activeText = "no";
   MyRepository repository;
-
 
   imgFromCamera() async {
     imageProfile =
@@ -58,20 +56,42 @@ class AdminPackageController extends GetxController {
   }
 
   void sendPackages() async {
-    bool packgesPost = await repository.adminPackages(title.text, price.text,
-        description.text, activeText, File(profile.path));
-    title.clear();
-    price.clear();
-    description.clear();
-    active=false;
-    profile =null;
-    activeText = "";
-
-    if (packgesPost == true) {
-      Get.snackbar("Packages", "Pakcages Post Successfully");
+    if (title.text.isNotEmpty &&
+        price.text.isNotEmpty &&
+        description.text.isNotEmpty &&
+        activeText.isNotEmpty &&
+        profile != null) {
+      bool packgesPost = await repository.adminPackages(title.text, price.text,
+          description.text, activeText, File(profile.path));
+      if (packgesPost == true) {
+        Get.snackbar("Packages", "Pakcages Post Successfully",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      } else {
+        Get.snackbar("Error", "Something is Happend",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+      title.clear();
+      price.clear();
+      description.clear();
+      active = false;
+      profile = null;
+      activeText = "";
     } else {
-      Get.snackbar("Error", "Something is Happend");
+      Get.defaultDialog(
+        title: "Alert",
+         textConfirm: "yes",
+         buttonColor: Colors.black,
+        middleText: "All the field must be required",
+        onConfirm: () {
+          Get.back();
+        },
+      );
     }
+
     update();
   }
 }

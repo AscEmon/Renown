@@ -21,6 +21,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<LoginPage> {
+   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LogInController logInController = Get.put(LogInController(
       repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
@@ -96,7 +97,7 @@ class _SignUpPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Form(
-                      key: logInController.formKey,
+                      key: _formKey,
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +226,7 @@ class _SignUpPageState extends State<LoginPage> {
                                     fontSize: 20),
                               ),
                               onPressed: () {
-                                logInController.loginFunction(adminCheck);
+                                logInController.loginFunction(adminCheck,_formKey);
                                 FocusScope.of(context).unfocus();
                               },
                             ),

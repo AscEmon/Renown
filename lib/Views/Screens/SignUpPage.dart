@@ -13,6 +13,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SignUpController signUpController = Get.put(SignUpController(
       repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
@@ -63,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     ),
                     child: Form(
-                      key: signUpController.formKey,
+                      key: _formKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Container(
@@ -285,7 +286,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         fontSize: 20),
                                   ),
                                   onPressed: () async {
-                                    await signUpController.signUpFunction();
+                                    await signUpController.signUpFunction(_formKey);
                                     FocusScope.of(context).unfocus();
                                   },
                                 ),

@@ -27,6 +27,9 @@ class AppRoutes {
   static String COMMENTPAGE = "CommentPage";
   static String PICTUREPAGE = "PicturePage";
   static String ADMINPACKAGES = "AdminPackages";
+  
+
+
   static List<GetPage> AppRoutesList() {
     return [
       GetPage(name: INITIAL, page: () => SplashPage()),

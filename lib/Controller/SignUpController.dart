@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class SignUpController extends GetxController {
   MyRepository repository;
  SignUpController({@required this.repository});
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final TextEditingController nameControllerSingUp =
       new TextEditingController();
   final TextEditingController emailControllerSingUp =
@@ -21,7 +21,7 @@ class SignUpController extends GetxController {
   String email = "";
   String password = "";
   
-  signUpFunction() async {
+  signUpFunction(GlobalKey<FormState> formKey) async {
     if (formKey.currentState.validate()) {
       print(nameControllerSingUp.text);
       print(emailControllerSingUp.text);

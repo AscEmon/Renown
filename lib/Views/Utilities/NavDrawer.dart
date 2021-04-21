@@ -1,16 +1,21 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
-import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:TrainnigInfo/main.dart';
-import '../Widget/NavDrawerTile.dart';
+import 'package:TrainnigInfo/Views/Widget/NavDrawerTile.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawer extends StatefulWidget {
+  @override
+  _NavDrawerState createState() => _NavDrawerState();
+}
+
+class _NavDrawerState extends State<NavDrawer> {
   final MyRepository myRepository =
       MyRepository(apiClient: MyApiClient(httpClient: Client()));
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -53,7 +58,6 @@ class NavDrawer extends StatelessWidget {
                 ),
               ),
             ),
-          
             Container(
               child: Column(
                 children: [
@@ -68,6 +72,7 @@ class NavDrawer extends StatelessWidget {
                     navIcon: Icons.today,
                     navTitle: "Todays Activity",
                     onNavPress: () {
+                      userprefs.clear();
                       // Get.toNamed(AppRoutes.INVOICEPAGE);
                     },
                   ),
@@ -85,6 +90,13 @@ class NavDrawer extends StatelessWidget {
                       //Get.toNamed(AppRoutes.LIVECHAT);
                     },
                   ),
+                   NavDrawerTile(
+                    navIcon: Icons.chat,
+                    navTitle: 'Live Chat',
+                    onNavPress: () {
+                      Get.toNamed(AppRoutes.DASHBOARD);
+                    },
+                  ),
                   NavDrawerTile(
                     navIcon: Icons.logout,
                     navTitle: 'Logout',
@@ -100,7 +112,7 @@ class NavDrawer extends StatelessWidget {
                           onConfirm: () async {
                             bool logout = await myRepository.logOutPost();
                             if (logout == true) {
-                              signOut();
+                             await signOut();
                             }
                           },
                           onCancel: () {
@@ -119,10 +131,9 @@ class NavDrawer extends StatelessWidget {
     );
   }
 
-//Clear all the sharedPrefrences Value
   signOut() {
     try {
-      userprefs?.clear();
+      userprefs.clear();
       Get.offAllNamed(AppRoutes.LOGIN);
     } catch (e) {
       print(e.toString());

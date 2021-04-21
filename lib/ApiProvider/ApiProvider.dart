@@ -6,17 +6,13 @@ import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
 import 'package:get/get.dart' as GETX;
+import 'package:http_parser/http_parser.dart';
 import '../Model/CategoryModel.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-
-
-
-
-
 
 const baseUrl =
     'https://app.ringersoft.com/api/ringersoftfoodapp/test-category/2?fbclid=IwAR3OfylOShIlzWs7pQEt5kLSyBfQhLrjhlWcbA4P6GIr-GUj0WDQaDgjTd0';
@@ -32,7 +28,7 @@ class MyApiClient {
   //this is the header where user token is also stored
   static header2() => {
         'Accept': 'application/json',
-        'Authorization': '${userMap["token_type"]} ${userMap["access_token"]}'
+        'Authorization': 'Bearer ${userMap["access_token"]}'
       };
 
 //Category Api Calling
@@ -73,12 +69,13 @@ class MyApiClient {
         print(responseString);
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
-       GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
+          userMap = jsonDecode(responseString);
+        GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return singUpModelFromJson(responseString);
       } else {
         print(response.statusCode);
         print(response.body);
-       GETX.Get.snackbar("Error", response.body);
+        GETX.Get.snackbar("Error", response.body);
       }
     } catch (e) {
       print("SignUp ::: ${e.toString()}");
@@ -106,7 +103,8 @@ class MyApiClient {
         print(responseString);
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
-       GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
+        userMap = jsonDecode(responseString);
+        GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return loginModelFromJson(responseString);
       } else if (response.statusCode == 401) {
         print(response.statusCode);
@@ -152,28 +150,33 @@ class MyApiClient {
     return null;
   }
 
-//this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Page
+//this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Controller
   Future<bool> adminPackagesPost(String title, String price, String description,
       String active, File image) async {
     print("apiProvider adminPackages");
-    print(title);
-    print(price);
-    print(description);
-    print(active);
-    print(image);
 
     try {
       Dio dio = Dio();
-    
-      FormData formData = FormData.fromMap({
-        "name": "wendux",
-        "age": 25,
-        "other": "params",
-      });
-      var response = await dio.post(AppRoutes.ADMINPACKAGES,
-          data: formData, options: Options(headers: header2()));
+      FormData formData = FormData.fromMap(
+        {
+          "title": title,
+          "price": price,
+          "description": description,
+          "active": active,
+          "image": await MultipartFile.fromFile(
+            image.path,
+          ),
+        },
+      );
+      var response = await dio.post(
+        AppUrl.adminPackagesUrl,
+        data: formData,
+        options: Options(
+          headers: header2(),
+        ),
+      );
       if (response.statusCode == 200) {
-        print("postAJobAndLeadPost  Done");
+        print("adminPackages  Done");
         print(response.data);
         return true;
       } else {
@@ -184,33 +187,6 @@ class MyApiClient {
     } catch (e) {
       print("Adminpackages ${e.toString()}");
     }
-    //   try {
-    //     final response = await httpClient.post(
-    //       AppUrl.adminPackagesUrl,
-    //       headers: header2(),
-    //       body: {
-    //         "title": title,
-    //         "price": price,
-    //         "description": description,
-    //         "active": active,
-    //         "image": image
-    //       },
-    //     );
-    //     print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
-    //     String responseString;
-    //     if (response.statusCode == 200) {
-    //       responseString = response.body;
-    //       print(responseString);
-    //       return true;
-    //     } else {
-    //       print(response.statusCode);
-    //       print(response.body);
-    //       return false;
-    //     }
-    //   } catch (e) {
-    //     print("AdminPackages ::: ${e.toString()}");
-    //   }
-    //   return null;
-    // }
+    return null;
   }
 }
