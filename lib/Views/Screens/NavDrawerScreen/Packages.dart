@@ -68,10 +68,10 @@ class _PackagesState extends State<Packages> {
                           for (var i = 0;
                               i <
                                   _checkController
-                                      .categoryList.value.data.length;
+                                      .packagesList.value.data.length;
                               i++)
                             InkWell(
-                              onTap: (){
+                              onTap: () {
                                 Get.toNamed(AppRoutes.ADMINPACKAGES);
                               },
                               child: Container(
@@ -107,7 +107,7 @@ class _PackagesState extends State<Packages> {
                                         ),
                                         Text(
                                           _checkController
-                                              .categoryList.value.data[i].id,
+                                              .packagesList.value.data[i].id,
                                           style: TextStyle(
                                               color: Colors.yellow[800]),
                                         ),
@@ -134,7 +134,7 @@ class _PackagesState extends State<Packages> {
                                           ),
                                           onPressed: () {
                                             print(
-                                                "pressed  ${_checkController.categoryList.value.data[i].id}");
+                                                "pressed  ${_checkController.packagesList.value.data[i].id}");
                                           },
                                         )
                                       ],

@@ -9,21 +9,21 @@ class CheckController extends GetxController {
   final MyRepository repository =
       MyRepository(apiClient: MyApiClient(httpClient: Client()));
   var isLoading = true.obs;
-  var categoryList = CategoryModel().obs;
+  var packagesList = CategoryModel().obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
-    fetchJob();
+    fetchPackages();
     super.onInit();
   }
 
-  void fetchJob() async {
+  void fetchPackages() async {
     try {
       isLoading(true);
-      var category = await repository.getAll();
-      if (category != null) {
-            categoryList(category);
+      var packages = await repository.getAll();
+      if (packages != null) {
+            packagesList(packages);
       }
     } finally {
       isLoading(false);

@@ -240,7 +240,7 @@ class _AdminPackagesState extends State<AdminPackages> {
                               fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
-                          adminPackageController.sendPackages();
+                          adminPackageController.sendPackages(context);
                         },
                       ),
                     ],

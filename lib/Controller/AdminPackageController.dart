@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,36 +56,54 @@ class AdminPackageController extends GetxController {
     update();
   }
 
-  void sendPackages() async {
+  void sendPackages(BuildContext context) async {
     if (title.text.isNotEmpty &&
         price.text.isNotEmpty &&
         description.text.isNotEmpty &&
         activeText.isNotEmpty &&
         profile != null) {
-      bool packgesPost = await repository.adminPackages(title.text, price.text,
-          description.text, activeText, File(profile.path));
-      if (packgesPost == true) {
-        Get.snackbar("Packages", "Pakcages Post Successfully",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green,
-            colorText: Colors.white);
-      } else {
-        Get.snackbar("Error", "Something is Happend",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white);
-      }
-      title.clear();
-      price.clear();
-      description.clear();
-      active = false;
-      profile = null;
-      activeText = "";
+      isInternet().then(
+        (internet) async {
+          if (internet == true) {
+            bool packgesPost = await repository.adminPackages(title.text,
+                price.text, description.text, activeText, File(profile.path));
+            if (packgesPost == true) {
+              Get.snackbar("Packages", "Pakcages Post Successfully",
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white);
+              title.clear();
+              price.clear();
+              description.clear();
+              active = false;
+              profile.path.isEmpty;
+              activeText = "";
+              FocusScope.of(context).unfocus();
+            } else {
+              Get.snackbar("Error", "Please Check All the field Properly",
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white);
+            }
+          } else {
+            Get.defaultDialog(
+              title: "Internet Problem",
+              content: Image.asset(
+                "images/NoInternet_ic.png",
+              ),
+              buttonColor: Colors.black,
+              onConfirm: () {
+                Get.back();
+              },
+            );
+          }
+        },
+      );
     } else {
       Get.defaultDialog(
         title: "Alert",
-         textConfirm: "yes",
-         buttonColor: Colors.black,
+        textConfirm: "yes",
+        buttonColor: Colors.black,
         middleText: "All the field must be required",
         onConfirm: () {
           Get.back();

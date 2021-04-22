@@ -1,11 +1,11 @@
-
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
   MyRepository repository;
- SignUpController({@required this.repository});
+  SignUpController({@required this.repository});
 
   final TextEditingController nameControllerSingUp =
       new TextEditingController();
@@ -17,25 +17,37 @@ class SignUpController extends GetxController {
       new TextEditingController();
   final TextEditingController confirmPasswordControllerSingUp =
       new TextEditingController();
-  String name = "";
-  String email = "";
-  String password = "";
-  
+
   signUpFunction(GlobalKey<FormState> formKey) async {
     if (formKey.currentState.validate()) {
       print(nameControllerSingUp.text);
       print(emailControllerSingUp.text);
       print(phoneControllerSingUp.text);
       print(passwordControllerSingUp.text);
-      name = nameControllerSingUp.text;
-      email = emailControllerSingUp.text;
-      password = passwordControllerSingUp.text;
-      await repository.signUpPost(name, email, password);
-      nameControllerSingUp.clear();
-      emailControllerSingUp.clear();
-      phoneControllerSingUp.clear();
-      passwordControllerSingUp.clear();
-      confirmPasswordControllerSingUp.clear();
+      isInternet().then(
+        (internet) async {
+          if (internet == true) {
+            await repository.signUpPost(nameControllerSingUp.text,
+                emailControllerSingUp.text, passwordControllerSingUp.text);
+            nameControllerSingUp.clear();
+            emailControllerSingUp.clear();
+            phoneControllerSingUp.clear();
+            passwordControllerSingUp.clear();
+            confirmPasswordControllerSingUp.clear();
+          } else {
+            Get.defaultDialog(
+              title: "Internet Problem",
+              content: Image.asset(
+                "images/NoInternet_ic.png",
+              ),
+              buttonColor: Colors.black,
+              onConfirm: () {
+                Get.back();
+              },
+            );
+          }
+        },
+      );
     }
     update();
   }

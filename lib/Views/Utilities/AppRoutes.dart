@@ -14,6 +14,7 @@ import '../../Views/Screens/SplashPage.dart';
 import '../../Views/Screens/NavDrawerScreen/Packages.dart';
 
 class AppRoutes {
+  
   static String INITIAL = "/";
   static String LOGIN = "LoginPage";
   static String SIGNUP = "SignUpPage";

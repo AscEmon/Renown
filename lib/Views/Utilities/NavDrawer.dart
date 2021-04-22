@@ -91,8 +91,8 @@ class _NavDrawerState extends State<NavDrawer> {
                     },
                   ),
                    NavDrawerTile(
-                    navIcon: Icons.chat,
-                    navTitle: 'Live Chat',
+                    navIcon: Icons.admin_panel_settings,
+                    navTitle: 'Admin',
                     onNavPress: () {
                       Get.toNamed(AppRoutes.DASHBOARD);
                     },

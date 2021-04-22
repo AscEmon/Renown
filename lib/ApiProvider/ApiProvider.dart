@@ -6,7 +6,6 @@ import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
 import 'package:get/get.dart' as GETX;
-import 'package:http_parser/http_parser.dart';
 import '../Model/CategoryModel.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -69,7 +68,7 @@ class MyApiClient {
         print(responseString);
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
-          userMap = jsonDecode(responseString);
+        userMap = jsonDecode(responseString);
         GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return singUpModelFromJson(responseString);
       } else {
