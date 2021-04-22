@@ -1,8 +1,10 @@
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesGet.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesPost.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/Dashboard.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/StatusPage.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/TotalUser.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/LiveChat.dart';
 import 'package:TrainnigInfo/Views/Screens/PicturePage.dart';
 import 'package:TrainnigInfo/Views/Screens/SubscriptionPage.dart';
@@ -27,7 +29,9 @@ class AppRoutes {
   static String STATUS = "Status";
   static String COMMENTPAGE = "CommentPage";
   static String PICTUREPAGE = "PicturePage";
-  static String ADMINPACKAGES = "AdminPackages";
+  static String ADMINPACKAGES = "AdminPackagesPost";
+  static String ADMINPACKAGESGET = "AdminPackagesGET";
+  static String TOTALUSER = "TotalUser";
   
 
 
@@ -46,6 +50,8 @@ class AppRoutes {
       GetPage(name: COMMENTPAGE, page: () => CommentPage()),
       GetPage(name: PICTUREPAGE, page: () => PicturePage()),
       GetPage(name: ADMINPACKAGES, page: () => AdminPackages()),
+      GetPage(name: ADMINPACKAGESGET, page: () => AdminPackagesGet()),
+       GetPage(name: TOTALUSER, page: () => TotalUser()),
     ];
   }
 }

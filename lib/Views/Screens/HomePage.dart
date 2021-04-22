@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.forum),
               onPressed: () {
                 print(userMap["data"]["email"]);
+                 print(userMap["access_token"]);
                 Get.toNamed(AppRoutes.FORUM);
               },
             )

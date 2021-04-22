@@ -87,7 +87,7 @@ class _NavDrawerState extends State<NavDrawer> {
                     navIcon: Icons.chat,
                     navTitle: 'Live Chat',
                     onNavPress: () {
-                      //Get.toNamed(AppRoutes.LIVECHAT);
+                      Get.toNamed(AppRoutes.ADMINPACKAGESGET);
                     },
                   ),
                    NavDrawerTile(

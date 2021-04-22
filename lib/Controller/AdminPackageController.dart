@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,44 @@ class AdminPackageController extends GetxController {
   bool active;
   String activeText = "no";
   MyRepository repository;
+  var isLoading = true.obs;
+  var adminPackagesList = AdminPackagesModel().obs;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    isInternet().then(
+      (internet) {
+        if (internet == true) {
+          fetchAdminPackages();
+        } else {
+          Get.defaultDialog(
+            title: "Internet Problem",
+            content: Image.asset(
+              "images/NoInternet_ic.png",
+            ),
+            buttonColor: Colors.black,
+            onConfirm: () {
+              Get.back();
+            },
+          );
+        }
+      },
+    );
+
+    super.onInit();
+  }
+
+  void fetchAdminPackages() async {
+    try {
+      isLoading(true);
+      var adminPakages = await repository.getAdminPackages();
+      if (adminPakages != null) {
+        adminPackagesList(adminPakages);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 
   imgFromCamera() async {
     imageProfile =

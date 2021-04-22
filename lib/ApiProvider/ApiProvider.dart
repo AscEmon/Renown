@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
+import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
 import 'package:TrainnigInfo/Model/LoginModel.dart';
+import 'package:TrainnigInfo/Model/TotalUserModel.dart';
 import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
@@ -48,6 +52,66 @@ class MyApiClient {
       }
     } catch (e) {
       print("getAll :::" + e.toString());
+    }
+  }
+
+//AdnminPackages Get  Api Calling
+  getAdminPakages() async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.adminPackagesUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Done AdminPakcges");
+        String jsonResponseString = response.body;
+        print(response.body);
+        return adminPackagesModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("getAdminPackages ::: ${e.toString()}");
+    }
+  }
+
+  //AdnminDashBoard Get  Api Calling
+  getAdminDashBoard() async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.adminDashboardUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Done AdminDashBoard");
+        String jsonResponseString = response.body;
+        print(response.body);
+        return adminDashBoardModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("getAdminDashBoard ::: ${e.toString()}");
+    }
+  }
+
+//TotalUser get Api for Admin where admin will see the list of User
+  getTotalUser() async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.adminTotalUserUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Done TotalUser");
+        String jsonResponseString = response.body;
+        print(response.body);
+        return totalUserModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("getTotalUser ::: ${e.toString()}");
     }
   }
 
@@ -126,7 +190,7 @@ class MyApiClient {
   Future<bool> logOutPost() async {
     print("apiProvider logout");
     String logOutUrl =
-        adminCheck == false ? AppUrl.logoutUrl : AppUrl.adminLogOutUrl;
+        userMap["role"] == "admin" ? AppUrl.adminLogOutUrl : AppUrl.logoutUrl;
     try {
       final response = await httpClient.post(
         logOutUrl,
