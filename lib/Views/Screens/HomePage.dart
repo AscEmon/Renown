@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:TrainnigInfo/Model/Check.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/NavDrawer.dart';
@@ -15,6 +17,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Duration timerTastoPremuto;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Timer.periodic(
+      Duration(seconds: 10),
+      (Timer timer) {
+        print("hey bro");
+        print(timer);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,14 +50,14 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.forum),
               onPressed: () {
                 print(userMap["data"]["email"]);
-                 print(userMap["access_token"]);
+                print(userMap["access_token"]);
                 Get.toNamed(AppRoutes.FORUM);
               },
             )
           ],
         ),
         floatingActionButton: InkWell(
-          onTap: (){
+          onTap: () {
             Get.toNamed(AppRoutes.PICTUREPAGE);
           },
           child: CircleAvatar(

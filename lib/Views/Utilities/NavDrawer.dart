@@ -58,73 +58,141 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
             ),
-            Container(
-              child: Column(
-                children: [
-                  NavDrawerTile(
-                    navIcon: Icons.preview,
-                    navTitle: 'Previous Activity',
-                    onNavPress: () {
-                      // Get.toNamed(AppRoutes.TRANSFERHISTORY);
-                    },
-                  ),
-                  NavDrawerTile(
-                    navIcon: Icons.today,
-                    navTitle: "Todays Activity",
-                    onNavPress: () {
-                      userprefs.clear();
-                      // Get.toNamed(AppRoutes.INVOICEPAGE);
-                    },
-                  ),
-                  NavDrawerTile(
-                    navIcon: Icons.grain,
-                    navTitle: 'Packages',
-                    onNavPress: () {
-                      Get.toNamed(AppRoutes.PACKAGES);
-                    },
-                  ),
-                  NavDrawerTile(
-                    navIcon: Icons.chat,
-                    navTitle: 'Live Chat',
-                    onNavPress: () {
-                      Get.toNamed(AppRoutes.ADMINPACKAGESGET);
-                    },
-                  ),
-                   NavDrawerTile(
-                    navIcon: Icons.admin_panel_settings,
-                    navTitle: 'Admin',
-                    onNavPress: () {
-                      Get.toNamed(AppRoutes.DASHBOARD);
-                    },
-                  ),
-                  NavDrawerTile(
-                    navIcon: Icons.logout,
-                    navTitle: 'Logout',
-                    onNavPress: () async {
-                      try {
-                        Get.defaultDialog(
-                          title: "Logout",
-                          middleText: "Are you sure, You want to Logout?",
-                          textConfirm: "yes",
-                          textCancel: "No",
-                          cancelTextColor: Colors.black,
-                          buttonColor: Colors.black,
-                          onConfirm: () async {
-                            bool logout = await myRepository.logOutPost();
-                            if (logout == true) {
-                             await signOut();
-                            }
+            userMap["role"] == "admin"
+                ? Container(
+                    child: Column(
+                      children: [
+                        NavDrawerTile(
+                          navIcon: Icons.preview,
+                          navTitle: 'Previous Activity',
+                          onNavPress: () {
+                            // Get.toNamed(AppRoutes.TRANSFERHISTORY);
                           },
-                          onCancel: () {
-                            Get.back();
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.today,
+                          navTitle: "Todays Activity",
+                          onNavPress: () {
+                            userprefs.clear();
+                            // Get.toNamed(AppRoutes.INVOICEPAGE);
                           },
-                        );
-                      } catch (e) {}
-                    },
-                  ),
-                ],
-              ),
-            )
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.grain,
+                          navTitle: 'Packages',
+                          onNavPress: () {
+                            Get.toNamed(AppRoutes.PACKAGES);
+                          },
+                        ),
+                          NavDrawerTile(
+                          navIcon: Icons.chat,
+                          navTitle: 'Live Chat',
+                          onNavPress: () {
+                           // Get.toNamed(AppRoutes.ADMINPACKAGESGET);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.grading,
+                          navTitle: 'Admin Packages',
+                          onNavPress: () {
+                            Get.toNamed(AppRoutes.ADMINPACKAGESGET);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.admin_panel_settings,
+                          navTitle: 'Admin',
+                          onNavPress: () {
+                            Get.toNamed(AppRoutes.DASHBOARD);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.logout,
+                          navTitle: 'Logout',
+                          onNavPress: () async {
+                            try {
+                              Get.defaultDialog(
+                                title: "Logout",
+                                middleText: "Are you sure, You want to Logout?",
+                                textConfirm: "yes",
+                                textCancel: "No",
+                                cancelTextColor: Colors.black,
+                                buttonColor: Colors.black,
+                                onConfirm: () async {
+                                  bool logout = await myRepository.logOutPost();
+                                  if (logout == true) {
+                                    await signOut();
+                                  }
+                                },
+                                onCancel: () {
+                                  Get.back();
+                                },
+                              );
+                            } catch (e) {}
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(
+                    child: Column(
+                      children: [
+                        NavDrawerTile(
+                          navIcon: Icons.preview,
+                          navTitle: 'Previous Activity',
+                          onNavPress: () {
+                            // Get.toNamed(AppRoutes.TRANSFERHISTORY);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.today,
+                          navTitle: "Todays Activity",
+                          onNavPress: () {
+                            userprefs.clear();
+                            // Get.toNamed(AppRoutes.INVOICEPAGE);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.grain,
+                          navTitle: 'Packages',
+                          onNavPress: () {
+                            Get.toNamed(AppRoutes.PACKAGES);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.chat,
+                          navTitle: 'Live Chat',
+                          onNavPress: () {
+                            Get.toNamed(AppRoutes.ADMINPACKAGESGET);
+                          },
+                        ),
+                        NavDrawerTile(
+                          navIcon: Icons.logout,
+                          navTitle: 'Logout',
+                          onNavPress: () async {
+                            try {
+                              Get.defaultDialog(
+                                title: "Logout",
+                                middleText: "Are you sure, You want to Logout?",
+                                textConfirm: "yes",
+                                textCancel: "No",
+                                cancelTextColor: Colors.black,
+                                buttonColor: Colors.black,
+                                onConfirm: () async {
+                                  bool logout = await myRepository.logOutPost();
+                                  if (logout == true) {
+                                    await signOut();
+                                  }
+                                },
+                                onCancel: () {
+                                  Get.back();
+                                },
+                              );
+                            } catch (e) {}
+                          },
+                        ),
+                      ],
+                    ),
+                  )
           ],
         ),
       ),

@@ -16,7 +16,11 @@ class AdminPackageController extends GetxController {
   TextEditingController price = TextEditingController();
   TextEditingController description = TextEditingController();
   bool active;
+  bool activeStatus;
   String activeText = "no";
+  var image = "".obs;
+  var editActiveStatusbool = false.obs;
+  var editActiveStatus = "".obs;
   MyRepository repository;
   var isLoading = true.obs;
   var adminPackagesList = AdminPackagesModel().obs;
@@ -87,11 +91,37 @@ class AdminPackageController extends GetxController {
     update();
   }
 
+  // this is for AdminPackages Post
   onchanged(bool value, BuildContext context) {
     FocusScope.of(context).unfocus();
     active = value;
     active == true ? activeText = "yes" : activeText = "no";
     print(activeText);
+    update();
+  }
+
+  // this is for editonChanged Switch
+  onchangedEdit(bool value, BuildContext context) {
+    FocusScope.of(context).unfocus();
+    editActiveStatusbool.value = value;
+    editActiveStatusbool.value == true
+        ? editActiveStatus.value = "yes"
+        : editActiveStatus.value = "no";
+    print(editActiveStatusbool.value);
+  }
+
+  // this is for AdminPackages Get where admin can change the status from list of Packages
+  onchangedStatusUpdate(bool value, int index, var id) async {
+    activeStatus = value;
+    activeStatus == true ? activeText = "yes" : activeText = "no";
+    await repository.statusUpdateAdminPackages(id);
+    print(activeText);
+    update();
+  }
+
+//Delete the AdminPackages using there id
+  deleteAdminPackages(var id) async {
+    await repository.deleteAdminPackages(id);
     update();
   }
 
@@ -107,7 +137,7 @@ class AdminPackageController extends GetxController {
             bool packgesPost = await repository.adminPackages(title.text,
                 price.text, description.text, activeText, File(profile.path));
             if (packgesPost == true) {
-              Get.snackbar("Packages", "Pakcages Post Successfully",
+              Get.snackbar("Packages", "Packages Post Successfully",
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.green,
                   colorText: Colors.white);
@@ -115,7 +145,7 @@ class AdminPackageController extends GetxController {
               price.clear();
               description.clear();
               active = false;
-              profile.path.isEmpty;
+              profile = null;
               activeText = "";
               FocusScope.of(context).unfocus();
             } else {
@@ -151,5 +181,52 @@ class AdminPackageController extends GetxController {
     }
 
     update();
+  }
+
+  sendModifyPackages(var id) {
+    isInternet().then(
+      (internet) async {
+        if (internet == true) {
+          editActiveStatusbool.value == true
+              ? editActiveStatus.value = "yes"
+              : editActiveStatus.value = "no";
+          print(title.text);
+          print(price.text);
+          print(description.text);
+          print(editActiveStatus.value);
+          profile == null ? print(image) : print(File(profile.path));
+          print(id);
+          bool packgesPost = await repository.adminPackagesModifyPut(
+            id,
+            title.text,
+            price.text,
+            description.text,
+            editActiveStatus.value,
+           profile == null ? File("false") : File(profile.path),
+          );
+          if (packgesPost == true) {
+            Get.snackbar("Packages Modify", "Packages Modify Successfully",
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white);
+              
+
+          } else {
+            print("Error ");
+          }
+        } else {
+          Get.defaultDialog(
+            title: "Internet Problem",
+            content: Image.asset(
+              "images/NoInternet_ic.png",
+            ),
+            buttonColor: Colors.black,
+            onConfirm: () {
+              Get.back();
+            },
+          );
+        }
+      },
+    );
   }
 }

@@ -9,6 +9,6 @@ class AppUrl {
   static String adminPackagesUrl = "$baseUrl/admin/package";
   static String adminDashboardUrl = "$baseUrl/admin/dashboard";
   static String adminTotalUserUrl = "$baseUrl/admin/user";
-
-   
+  static String adminPackagesStatusUrl = "$baseUrl/admin/change/package/status";
+  static String adminRefreshTokenUrl = "$baseUrl/admin/login/refresh";
 }

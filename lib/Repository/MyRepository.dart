@@ -20,6 +20,12 @@ getAdminDashBoard(){
 getTotalUser(){
   return apiClient.getTotalUser();
 }
+adminPackagesModifyPut(var id,String title,String price,String description,String active,File image){
+  return apiClient.adminPackagesModifyPut(id, title, price, description, active, image);
+}
+statusUpdateAdminPackages(var id){
+  return apiClient.statusUpdateAdminPackages(id);
+}
 signUpPost(String name,String email,String password){
   print(name);
   return apiClient.signUpPost(name,email, password);
@@ -31,8 +37,15 @@ signUpPost(String name,String email,String password){
 logOutPost(){
   return apiClient.logOutPost();
 }
+refreshTokenPost()
+{
+  return apiClient.refreashTokenPost();
+}
 adminPackages(String title,String price,String description,String active,File image){
   return apiClient.adminPackagesPost(title, price, description, active, image);
+}
+deleteAdminPackages(var id){
+  return apiClient.deleteAdminPakages(id);
 }
 
 }

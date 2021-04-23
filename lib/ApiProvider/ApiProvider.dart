@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:isolate';
 import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
 import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
 import 'package:TrainnigInfo/Model/LoginModel.dart';
 import 'package:TrainnigInfo/Model/TotalUserModel.dart';
-import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
 import 'package:get/get.dart' as GETX;
@@ -114,6 +112,34 @@ class MyApiClient {
       print("getTotalUser ::: ${e.toString()}");
     }
   }
+
+  //AdnminPackages Status Update Api Calling
+  statusUpdateAdminPackages(var id) async {
+    try {
+      var response = await httpClient
+          .get(AppUrl.adminPackagesStatusUrl + "/$id", headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Admin Packages $id Status is Updated");
+        print(response.body);
+        GETX.Get.snackbar("Update", "Sucessfully Update  the Status",
+            snackPosition: GETX.SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        GETX.Get.snackbar("Error", "Something is Happend",
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            snackPosition: GETX.SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      print("statusUpdateAdminPackages ::: ${e.toString()}");
+    }
+  }
+
+//AdnminPackages data Modify put Api Calling
 
 //this is for SignUp APi where name, email and Password are come from SignUpController
   Future<SingUpModel> signUpPost(
@@ -232,7 +258,7 @@ class MyApiClient {
         },
       );
       var response = await dio.post(
-        AppUrl.adminPackagesUrl,
+        AppUrl.adminPackagesUrl + "?_method=POST",
         data: formData,
         options: Options(
           headers: header2(),
@@ -251,5 +277,106 @@ class MyApiClient {
       print("Adminpackages ${e.toString()}");
     }
     return null;
+  }
+
+//this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Controller
+  Future<bool> adminPackagesModifyPut(var id, String title, String price,
+      String description, String active, File image) async {
+    print("apiProvider adminPackagesModify Put");
+    print(id);
+    print(title);
+    print(price);
+    print(description);
+    print(active);
+    print(image.path);
+
+    try {
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap(
+        image.path == "false"
+            ? {
+                "title": title,
+                "price": price,
+                "description": description,
+                "active": active,
+              }
+            : {
+                "title": title,
+                "price": price,
+                "description": description,
+                "active": active,
+                "image": await MultipartFile.fromFile(
+                  image.path,
+                ),
+              },
+      );
+
+      var response = await dio.post(
+        AppUrl.adminPackagesUrl + "/$id?_method=PUT",
+        data: formData,
+        options: Options(
+          headers: header2(),
+        ),
+      );
+      if (response.statusCode == 200) {
+        print("adminPackagesModify  Done");
+        print(response.data);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.data);
+        return false;
+      }
+    } catch (e) {
+      print("adminPackagesModify ${e.toString()}");
+    }
+    return null;
+  }
+
+
+ //RefreshToken After expiry in 1 hour it will be call from LoginController 
+  Future<bool> refreashTokenPost() async {
+    print("apiProvider RefreshToken");
+    try {
+      final response = await httpClient.post(
+        AppUrl.adminRefreshTokenUrl,
+        headers: header2(),
+      );
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      String responseString;
+      if (response.statusCode == 200) {
+        responseString = response.body;
+        print(responseString);
+        userprefs.setString("userInfos", responseString);
+        userMap = jsonDecode(responseString);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("RefreshToken ::: ${e.toString()}");
+    }
+    return null;
+  }
+
+//AdnminPackages Delete  Api Calling
+  deleteAdminPakages(var id) async {
+    try {
+      var response = await httpClient.delete(AppUrl.adminPackagesUrl + "/$id",
+          headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Admin Packages $id is Deleted");
+        print(response.body);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Packages");
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        GETX.Get.snackbar("Error", "Something is Happend");
+      }
+    } catch (e) {
+      print("deleteAdminPakages ::: ${e.toString()}");
+    }
   }
 }

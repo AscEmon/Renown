@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 
-
-
 class LogInController extends GetxController {
   MyRepository repository;
   LogInController({@required this.repository});
@@ -22,13 +20,14 @@ class LogInController extends GetxController {
         (internet) async {
           if (internet == true) {
             var now = DateTime.now();
-           // checkValidity();
+            // checkValidity();
             print("This is Current Time " + now.second.toString());
             await repository.loginPost(
                 amdminCheck, emailLogin.text, passwordLogin.text);
             emailLogin.clear();
             passwordLogin.clear();
             adminCheck = false;
+
           } else {
             Get.defaultDialog(
               title: "Internet Problem",
