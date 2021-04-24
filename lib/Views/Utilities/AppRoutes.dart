@@ -1,5 +1,6 @@
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesGet.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesPost.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminVideo/AdminVideoPost.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/Dashboard.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
@@ -16,7 +17,6 @@ import '../../Views/Screens/SplashPage.dart';
 import '../../Views/Screens/NavDrawerScreen/Packages.dart';
 
 class AppRoutes {
-  
   static String INITIAL = "/";
   static String LOGIN = "LoginPage";
   static String SIGNUP = "SignUpPage";
@@ -32,8 +32,7 @@ class AppRoutes {
   static String ADMINPACKAGES = "AdminPackagesPost";
   static String ADMINPACKAGESGET = "AdminPackagesGET";
   static String TOTALUSER = "TotalUser";
-  
-
+  static String ADMINVIDEOPOST = "AdminVideoPost";
 
   static List<GetPage> AppRoutesList() {
     return [
@@ -51,7 +50,8 @@ class AppRoutes {
       GetPage(name: PICTUREPAGE, page: () => PicturePage()),
       GetPage(name: ADMINPACKAGES, page: () => AdminPackages()),
       GetPage(name: ADMINPACKAGESGET, page: () => AdminPackagesGet()),
-       GetPage(name: TOTALUSER, page: () => TotalUser()),
+      GetPage(name: TOTALUSER, page: () => TotalUser()),
+      GetPage(name: ADMINVIDEOPOST, page: () => AdminVideoPost()),
     ];
   }
 }

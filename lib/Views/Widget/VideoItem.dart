@@ -21,10 +21,11 @@ class _VideoItemState extends State<VideoItem> {
   void initState() {
     super.initState();
     // Wrapper on top of the videoPlayerController
+    widget.videoPlayerController.initialize();
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: 16 / 9,
-      autoInitialize: true,
+      autoInitialize: false,
       looping: widget.looping,
       
       showControls: true,

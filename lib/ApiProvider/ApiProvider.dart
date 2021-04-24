@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
 import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
+import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
 import 'package:TrainnigInfo/Model/LoginModel.dart';
 import 'package:TrainnigInfo/Model/TotalUserModel.dart';
@@ -139,7 +140,26 @@ class MyApiClient {
     }
   }
 
-//AdnminPackages data Modify put Api Calling
+  //AdnminVideo  GET  Api Calling
+  adminVideoGet() async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.adminVideoUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Admin Video Get");
+        print(response.body);
+        String jsonResponseString = response.body;
+        print(response.body);
+        return adminVideoModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("adminVideoGet ::: ${e.toString()}");
+    }
+  }
 
 //this is for SignUp APi where name, email and Password are come from SignUpController
   Future<SingUpModel> signUpPost(
@@ -333,8 +353,7 @@ class MyApiClient {
     return null;
   }
 
-
- //RefreshToken After expiry in 1 hour it will be call from LoginController 
+  //RefreshToken After expiry in 1 hour it will be call from LoginController
   Future<bool> refreashTokenPost() async {
     print("apiProvider RefreshToken");
     try {
@@ -360,6 +379,126 @@ class MyApiClient {
     return null;
   }
 
+//this is for AdminVideo APi where title, price ,description, publish, startImg,endImg  and video are come from AdminVideo Controller
+  Future<bool> adminVideoPost(
+      String title,
+      String price,
+      String description,
+      var packageId,
+      String startImg,
+      String endImg,
+      String pubLish,
+      File video) async {
+    print("apiProvider adminVideo");
+    print(packageId);
+    print(startImg);
+    print(video.path);
+    print(pubLish);
+
+    try {
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap(
+        {
+          "videoTitle": title,
+          "day": price,
+          "videoDescription": description,
+          "package_id": packageId,
+          "startingImage": startImg,
+          "endinggImage": endImg,
+          "publish": pubLish,
+          "video": await MultipartFile.fromFile(
+            video.path,
+          ),
+        },
+      );
+      var response = await dio.post(
+        AppUrl.adminVideoUrl + "?_method=POST",
+        data: formData,
+        options: Options(
+          headers: header2(),
+        ),
+      );
+      if (response.statusCode == 200) {
+        print("admin Video  Done");
+        print(response.data);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.data);
+        return false;
+      }
+    } catch (e) {
+      print("adminVideoPost ${e.toString()}");
+    }
+    return null;
+  }
+
+//this is for AdminVideoModify APi where title, price ,description, publish, startImg,endImg  and video are come from AdminVideo Controller
+  Future<bool> adminVideoModifyPut(
+      var id,
+      String title,
+      String price,
+      String description,
+      var packageId,
+      String startImg,
+      String endImg,
+      String pubLish,
+      File video) async {
+    print("apiProvider adminVideoModify");
+    print(packageId);
+    print(startImg);
+    print(video.path);
+    print(pubLish);
+    print(id);
+
+    try {
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap(
+        video.path == "false"
+            ? {
+                "videoTitle": title,
+                "day": price,
+                "videoDescription": description,
+                "package_id": packageId,
+                "startingImage": startImg,
+                "endinggImage": endImg,
+                "publish": pubLish,
+              }
+            : {
+                "videoTitle": title,
+                "day": price,
+                "videoDescription": description,
+                "package_id": packageId,
+                "startingImage": startImg,
+                "endinggImage": endImg,
+                "publish": pubLish,
+                "video": await MultipartFile.fromFile(
+                  video.path,
+                ),
+              },
+      );
+      var response = await dio.post(
+        AppUrl.adminVideoUrl + "/$id?_method=PUT",
+        data: formData,
+        options: Options(
+          headers: header2(),
+        ),
+      );
+      if (response.statusCode == 200) {
+        print("admin VideoModify  Done");
+        print(response.data);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.data);
+        return false;
+      }
+    } catch (e) {
+      print("adminVideoModifyPut ${e.toString()}");
+    }
+    return null;
+  }
+
 //AdnminPackages Delete  Api Calling
   deleteAdminPakages(var id) async {
     try {
@@ -369,14 +508,34 @@ class MyApiClient {
       if (response.statusCode == 200) {
         print("Admin Packages $id is Deleted");
         print(response.body);
-        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Packages");
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Packages",backgroundColor: Colors.green,colorText: Colors.white);
       } else {
         print(response.statusCode);
         print(response.body);
-        GETX.Get.snackbar("Error", "Something is Happend");
+        GETX.Get.snackbar("Error", "Something is Happend",colorText: Colors.white,backgroundColor: Colors.red);
       }
     } catch (e) {
       print("deleteAdminPakages ::: ${e.toString()}");
+    }
+  }
+
+  //AdnminPackages Delete  Api Calling
+  deleteAdminVideo(var id) async {
+    try {
+      var response = await httpClient.delete(AppUrl.adminVideoUrl + "/$id",
+          headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Admin Video $id is Deleted");
+        print(response.body);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Video",backgroundColor: Colors.green,colorText: Colors.white);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        GETX.Get.snackbar("Error", "Something is Happend",colorText: Colors.white,backgroundColor: Colors.red);
+      }
+    } catch (e) {
+      print("deleteAdminVideo ::: ${e.toString()}");
     }
   }
 }

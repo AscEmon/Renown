@@ -1,4 +1,4 @@
-String baseUrl = "http://work.mshakhawat.com/api";
+String baseUrl = "https://work.mshakhawat.com/api";
 
 class AppUrl {
   static String signUpUrl = "$baseUrl/auth/register";
@@ -11,4 +11,5 @@ class AppUrl {
   static String adminTotalUserUrl = "$baseUrl/admin/user";
   static String adminPackagesStatusUrl = "$baseUrl/admin/change/package/status";
   static String adminRefreshTokenUrl = "$baseUrl/admin/login/refresh";
+  static String adminVideoUrl = "$baseUrl/admin/video";
 }

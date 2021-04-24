@@ -164,6 +164,7 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                                             onConfirm: () {
                                               adminPackageController
                                                   .deleteAdminPackages(id);
+                                                  Get.back();
                                             },
                                           );
                                         },
