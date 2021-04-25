@@ -121,33 +121,41 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                                     ),
                                   ),
                                   title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        adminPackageController.adminPackagesList
-                                            .value.result[index].title,
-                                        style: TextStyle(fontSize: 12),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          adminPackageController
+                                              .adminPackagesList
+                                              .value
+                                              .result[index]
+                                              .title,
+                                          style: TextStyle(fontSize: 12),
+                                        ),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Get.toNamed(
-                                            AppRoutes.ADMINPACKAGES,
-                                            arguments: [
-                                              "edit",
-                                              title,
-                                              price,
-                                              description,
-                                              activeStatus,
-                                              image,
-                                              id
-                                            ],
-                                          );
-                                        },
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.green,
-                                          size: 24,
+                                      Expanded(
+                                        flex: 2,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              AppRoutes.ADMINPACKAGES,
+                                              arguments: [
+                                                "edit",
+                                                title,
+                                                price,
+                                                description,
+                                                activeStatus,
+                                                image,
+                                                id
+                                              ],
+                                            );
+                                          },
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Colors.green,
+                                            size: 24,
+                                          ),
                                         ),
                                       ),
                                       InkWell(
@@ -158,13 +166,11 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                                                 "Are you sure, You want to Delete this Package",
                                             buttonColor: Colors.red,
                                             cancelTextColor: Colors.black,
-                                             onCancel: (){
-                                               
-                                             },
+                                            onCancel: () {},
                                             onConfirm: () {
                                               adminPackageController
                                                   .deleteAdminPackages(id);
-                                                  Get.back();
+                                              Get.back();
                                             },
                                           );
                                         },

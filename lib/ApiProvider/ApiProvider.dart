@@ -193,8 +193,7 @@ class MyApiClient {
   }
 
   //This is for LoginApi where email and Password are come from loginController
-  Future<LoginModel> loginPost(
-      var adminCheck, String email, String password) async {
+  Future<bool> loginPost(var adminCheck, String email, String password) async {
     print("apiProvider Login");
     print(adminCheck);
     String loginUrl =
@@ -213,15 +212,12 @@ class MyApiClient {
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
         userMap = jsonDecode(responseString);
-        GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
-        return loginModelFromJson(responseString);
+        return true;
       } else if (response.statusCode == 401) {
         print(response.statusCode);
         print(response.body);
         responseString = response.body;
-        Map<String, dynamic> showError = jsonDecode(responseString);
-        GETX.Get.snackbar("Error", showError["error"],
-            backgroundColor: Colors.red, colorText: Colors.white);
+        return false;
       } else {
         print(response.statusCode);
         print(response.body);
@@ -247,6 +243,11 @@ class MyApiClient {
       if (response.statusCode == 200) {
         responseString = response.body;
         return true;
+      } else if (response.statusCode == 401) {
+        print("working RefreshToken");
+        refreashTokenPost().then((refreshToken) {
+          logOutPost();
+        });
       } else {
         print(response.statusCode);
         print(response.body);
@@ -508,11 +509,13 @@ class MyApiClient {
       if (response.statusCode == 200) {
         print("Admin Packages $id is Deleted");
         print(response.body);
-        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Packages",backgroundColor: Colors.green,colorText: Colors.white);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Packages",
+            backgroundColor: Colors.green, colorText: Colors.white);
       } else {
         print(response.statusCode);
         print(response.body);
-        GETX.Get.snackbar("Error", "Something is Happend",colorText: Colors.white,backgroundColor: Colors.red);
+        GETX.Get.snackbar("Error", "Something is Happend",
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
     } catch (e) {
       print("deleteAdminPakages ::: ${e.toString()}");
@@ -528,11 +531,13 @@ class MyApiClient {
       if (response.statusCode == 200) {
         print("Admin Video $id is Deleted");
         print(response.body);
-        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Video",backgroundColor: Colors.green,colorText: Colors.white);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Video",
+            backgroundColor: Colors.green, colorText: Colors.white);
       } else {
         print(response.statusCode);
         print(response.body);
-        GETX.Get.snackbar("Error", "Something is Happend",colorText: Colors.white,backgroundColor: Colors.red);
+        GETX.Get.snackbar("Error", "Something is Happend",
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
     } catch (e) {
       print("deleteAdminVideo ::: ${e.toString()}");

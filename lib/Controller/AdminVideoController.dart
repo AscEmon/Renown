@@ -22,6 +22,7 @@ class AdminVideoController extends GetxController {
   String publishDropDn;
   var packagesSelect;
   Map dropDpwnShow = {
+    "": "",
     'yes': 'Yes',
     'no': 'No',
   };
@@ -65,7 +66,7 @@ class AdminVideoController extends GetxController {
   }
 
   //statring Image Drop Down on changed Method
-  onchangedDropDnStartingImage(startingImag,BuildContext context) {
+  onchangedDropDnStartingImage(startingImag, BuildContext context) {
     FocusScope.of(context).unfocus();
     startingImageDropDn = startingImag;
     print(startingImageDropDn);
@@ -73,16 +74,16 @@ class AdminVideoController extends GetxController {
   }
 
   //ending Image Drop Down on changed Method
-  onchangedDropDnEndingImage(var valueSelectedByUser,BuildContext context) {
-     FocusScope.of(context).unfocus();
+  onchangedDropDnEndingImage(var valueSelectedByUser, BuildContext context) {
+    FocusScope.of(context).unfocus();
     endingImageDropDn = valueSelectedByUser;
     print(endingImageDropDn);
     update();
   }
 
   //Publish Drop Down on changed Method
-  onchangedDropDnPulish(var valueSelectedByUser,BuildContext context) {
-     FocusScope.of(context).unfocus();
+  onchangedDropDnPulish(var valueSelectedByUser, BuildContext context) {
+    FocusScope.of(context).unfocus();
     publishDropDn = valueSelectedByUser;
     print(publishDropDn);
     update();
@@ -106,14 +107,12 @@ class AdminVideoController extends GetxController {
     }
     update();
   }
- 
 
   //Delete the AdminVideo using there id
   deleteAdminVideo(var id) async {
     await repository.deleteAdminVideo(id);
     update();
   }
-
 
   //send all the file and text in there to repository
   void sendVideos(packagesSelect) async {
@@ -186,12 +185,12 @@ class AdminVideoController extends GetxController {
   }
 
   //send all the file and text in there to repository
-  void sendModifyVideosPut(packagesSelect,var id) async {
+  void sendModifyVideosPut(packagesSelect, var id) async {
     isInternet().then(
       (internet) async {
         if (internet == true) {
           bool videoModifyPut = await repository.adminVideoModifyPut(
-             id,
+            id,
             title.text,
             day.text,
             description.text,
@@ -214,7 +213,7 @@ class AdminVideoController extends GetxController {
             publishDropDn = "";
             packagesSelect = null;
             videoFile = null;
-          } 
+          }
         } else {
           Get.defaultDialog(
             title: "Internet Problem",
