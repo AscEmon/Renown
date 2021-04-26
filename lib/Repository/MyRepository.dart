@@ -7,8 +7,8 @@ class MyRepository {
 
   MyRepository({@required this.apiClient}) : assert(apiClient != null);
 
-  getAll() {
-    return apiClient.getAll();
+  getUserPackages() {
+    return apiClient.getUserPackages();
   }
 
   getAdminPackages() {
@@ -73,6 +73,9 @@ class MyRepository {
 
   refreshTokenPost() {
     return apiClient.refreashTokenPost();
+  }
+  userSubscriptionPost(var amonut,var pId,var uId){
+    return apiClient.userSubscription(amonut, pId, uId);
   }
 
   adminPackages(String title, String price, String description, String active,

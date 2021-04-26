@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AdminPackageController extends GetxController {
   AdminPackageController({@required this.repository});
+  MyRepository repository;
   PickedFile imageProfile;
   Image profileImage;
   ImagePicker _picker = ImagePicker();
@@ -21,7 +22,7 @@ class AdminPackageController extends GetxController {
   var image = "".obs;
   var editActiveStatusbool = false.obs;
   var editActiveStatus = "".obs;
-  MyRepository repository;
+
   var isLoading = true.obs;
   var adminPackagesList = AdminPackagesModel().obs;
   @override
@@ -202,15 +203,13 @@ class AdminPackageController extends GetxController {
             price.text,
             description.text,
             editActiveStatus.value,
-           profile == null ? File("false") : File(profile.path),
+            profile == null ? File("false") : File(profile.path),
           );
           if (packgesPost == true) {
             Get.snackbar("Packages Modify", "Packages Modify Successfully",
                 snackPosition: SnackPosition.BOTTOM,
                 backgroundColor: Colors.green,
                 colorText: Colors.white);
-              
-
           } else {
             print("Error ");
           }

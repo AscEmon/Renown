@@ -189,44 +189,47 @@ class _AdminVideoPostState extends State<AdminVideoPost> {
                         return _adminPackageController.isLoading.value == true
                             ? Padding(
                                 padding:
-                                    const EdgeInsets.only(bottom: 10, top: 12),
+                                    const EdgeInsets.only(bottom: 10, top: 12,left: 16,right: 16),
                                 child: Row(
                                   children: [
                                     Text("Select Package"),
                                   ],
                                 ),
                               )
-                            : DropdownButton(
-                                isExpanded: true,
-                                hint: Text(
-                                  edit == "edit" ? packageId : "Select Package",
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.black),
-                                ),
-                                items: _adminPackageController
-                                    .adminPackagesList.value.result
-                                    .map(
-                                  (item) {
-                                    return DropdownMenuItem(
-                                      child: Text(item.title),
-                                      value: edit == "edit"
-                                          ? packageId.toString()
-                                          : item.id.toString(),
+                            : Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: DropdownButton(
+                                  isExpanded: true,
+                                  hint: Text(
+                                    edit == "edit" ? packageId : "Select Package",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                  ),
+                                  items: _adminPackageController
+                                      .adminPackagesList.value.result
+                                      .map(
+                                    (item) {
+                                      return DropdownMenuItem(
+                                        child: Text(item.title),
+                                        value: edit == "edit"
+                                            ? packageId.toString()
+                                            : item.id.toString(),
+                                      );
+                                    },
+                                  ).toList(),
+                                  onChanged: (newVal) {
+                                    setState(
+                                      () {
+                                        FocusScope.of(context).unfocus();
+                                        packagesSelect = newVal;
+                                        print(packagesSelect);
+                                      },
                                     );
                                   },
-                                ).toList(),
-                                onChanged: (newVal) {
-                                  setState(
-                                    () {
-                                      FocusScope.of(context).unfocus();
-                                      packagesSelect = newVal;
-                                      print(packagesSelect);
-                                    },
-                                  );
-                                },
-                                value: packagesSelect,
-                                underline: SizedBox(),
-                              );
+                                  value: packagesSelect,
+                                  underline: SizedBox(),
+                                ),
+                            );
                       },
                     ),
                     SizedBox(
@@ -236,9 +239,14 @@ class _AdminVideoPostState extends State<AdminVideoPost> {
                       height: 60,
                       width: Get.width,
                       child: ListTile(
-                        title: Text(
-                          "Starting Image",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        title: InkWell(
+                          onTap: (){
+                            _adminVideoController.temp();
+                          },
+                          child: Text(
+                            "Starting Image",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
                         ),
                         trailing: Container(
                           height: 20,

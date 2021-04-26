@@ -21,6 +21,7 @@ class AdminVideoController extends GetxController {
   String endingImageDropDn;
   String publishDropDn;
   var packagesSelect;
+  bool dialogShow;
   Map dropDpwnShow = {
     "": "",
     'yes': 'Yes',
@@ -89,6 +90,10 @@ class AdminVideoController extends GetxController {
     update();
   }
 
+  temp() async {
+    await repository.refreshTokenPost();
+  }
+
   videoFilePick() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
@@ -127,34 +132,38 @@ class AdminVideoController extends GetxController {
       isInternet().then(
         (internet) async {
           if (internet == true) {
-            bool videoPost = await repository.adminVideoPost(
-                title.text,
-                day.text,
-                description.text,
-                packagesSelect,
-                startingImageDropDn,
-                endingImageDropDn,
-                publishDropDn,
-                File(videoFile.path));
-            if (videoPost == true) {
-              Get.snackbar("Video", "Video Post Successfully",
-                  snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: Colors.green,
-                  colorText: Colors.white);
-              title.clear();
-              day.clear();
-              description.clear();
-              startingImageDropDn = "";
-              endingImageDropDn = "";
-              publishDropDn = "";
-              packagesSelect = null;
-              videoFile = null;
-            } else {
-              Get.snackbar("Error", "Please Check All the field Properly",
-                  snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
-            }
+            dialogShowMethod(false);
+            await repository
+                .adminVideoPost(
+                    title.text,
+                    day.text,
+                    description.text,
+                    packagesSelect,
+                    startingImageDropDn,
+                    endingImageDropDn,
+                    publishDropDn,
+                    File(videoFile.path))
+                .then(
+              (videoPost) {
+                if (videoPost == true) {
+                  Get.back(closeOverlays: true);
+                  dialogShowMethod(true);
+                  title.clear();
+                  day.clear();
+                  description.clear();
+                  startingImageDropDn = "";
+                  endingImageDropDn = "";
+                  publishDropDn = "";
+                  packagesSelect = null;
+                  videoFile = null;
+                } else {
+                  Get.snackbar("Error", "Please Check All the field Properly",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white);
+                }
+              },
+            );
           } else {
             Get.defaultDialog(
               title: "Internet Problem",
@@ -189,7 +198,9 @@ class AdminVideoController extends GetxController {
     isInternet().then(
       (internet) async {
         if (internet == true) {
-          bool videoModifyPut = await repository.adminVideoModifyPut(
+          dialogShowMethod(false);
+          await repository
+              .adminVideoModifyPut(
             id,
             title.text,
             day.text,
@@ -199,21 +210,29 @@ class AdminVideoController extends GetxController {
             endingImageDropDn,
             publishDropDn,
             videoFile == null ? File("false") : File(videoFile.path),
+          )
+              .then(
+            (videoPost) {
+              if (videoPost == true) {
+                Get.back(closeOverlays: true);
+                dialogShowMethod(true);
+                id = "";
+                title.clear();
+                day.clear();
+                description.clear();
+                startingImageDropDn = "";
+                endingImageDropDn = "";
+                publishDropDn = "";
+                packagesSelect = null;
+                videoFile = null;
+              } else {
+                Get.snackbar("Error", "Please Check All the field Properly",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white);
+              }
+            },
           );
-          if (videoModifyPut == true) {
-            Get.snackbar("Modify Video", "Updated  Successfully",
-                snackPosition: SnackPosition.BOTTOM,
-                backgroundColor: Colors.green,
-                colorText: Colors.white);
-            title.clear();
-            day.clear();
-            description.clear();
-            startingImageDropDn = "";
-            endingImageDropDn = "";
-            publishDropDn = "";
-            packagesSelect = null;
-            videoFile = null;
-          }
         } else {
           Get.defaultDialog(
             title: "Internet Problem",
@@ -228,6 +247,29 @@ class AdminVideoController extends GetxController {
         }
       },
     );
+    update();
+  }
+
+  dialogShowMethod(dialogShow) {
+    dialogShow == false
+        ? Get.defaultDialog(
+            barrierDismissible: false,
+            title: "Loading....",
+            content: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.red,
+              ),
+            ))
+        : Get.defaultDialog(
+            barrierDismissible: false,
+            title: "Video Upload",
+            middleText: "Video is Posted Successfully",
+            confirmTextColor: Colors.white,
+            buttonColor: Colors.black,
+            onConfirm: () {
+              Get.back();
+            });
+
     update();
   }
 }

@@ -4,20 +4,16 @@ import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
 import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
-import 'package:TrainnigInfo/Model/LoginModel.dart';
 import 'package:TrainnigInfo/Model/TotalUserModel.dart';
+import 'package:TrainnigInfo/Model/UserPackagesModel.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
 import 'package:get/get.dart' as GETX;
-import '../Model/CategoryModel.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-
-const baseUrl =
-    'https://app.ringersoft.com/api/ringersoftfoodapp/test-category/2?fbclid=IwAR3OfylOShIlzWs7pQEt5kLSyBfQhLrjhlWcbA4P6GIr-GUj0WDQaDgjTd0';
 
 class MyApiClient {
   final http.Client httpClient;
@@ -33,24 +29,24 @@ class MyApiClient {
         'Authorization': 'Bearer ${userMap["access_token"]}'
       };
 
-//Category Api Calling
-  getAll() async {
+//User Packages  Api Calling
+  getUserPackages() async {
     try {
       var response = await httpClient.get(
-        baseUrl,
+        AppUrl.userPackagesUrl,
       );
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
       if (response.statusCode == 200) {
-        print("Done category");
+        print("Done user Packages");
         String jsonResponseString = response.body;
         print(response.body);
-        return categoryModelFromJson(jsonResponseString);
+        return userPackagesModelFromJson(jsonResponseString);
       } else {
         print(response.statusCode);
         print(response.body);
       }
     } catch (e) {
-      print("getAll :::" + e.toString());
+      print("getUserPackages :::" + e.toString());
     }
   }
 
@@ -245,9 +241,16 @@ class MyApiClient {
         return true;
       } else if (response.statusCode == 401) {
         print("working RefreshToken");
-        refreashTokenPost().then((refreshToken) {
-          logOutPost();
-        });
+        await refreashTokenPost().then(
+          (refresh) {
+            if (refresh == true) {
+              logOutPost();
+            } else {
+              // GETX.Get.offAndToNamed(AppRoutes.LOGIN);
+              GETX.Get.snackbar("Refresh Erron", "Pls Uninstall the app ");
+            }
+          },
+        );
       } else {
         print(response.statusCode);
         print(response.body);
@@ -357,9 +360,11 @@ class MyApiClient {
   //RefreshToken After expiry in 1 hour it will be call from LoginController
   Future<bool> refreashTokenPost() async {
     print("apiProvider RefreshToken");
+    print(userMap["access_token"]);
     try {
-      final response = await httpClient.post(
-        AppUrl.adminRefreshTokenUrl,
+      http.Response response;
+      response = await http.post(
+        Uri.parse(AppUrl.adminRefreshTokenUrl),
         headers: header2(),
       );
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
@@ -496,6 +501,32 @@ class MyApiClient {
       }
     } catch (e) {
       print("adminVideoModifyPut ${e.toString()}");
+    }
+    return null;
+  }
+
+//User Subscription Api is calling which is come from UserSubsCription Controller
+  Future<bool> userSubscription(var amonut, var pId, var uId) async {
+    print("apiProvider userSubscription");
+     print(userMap["access_token"]);
+    try {
+      final response = await httpClient.post(
+        AppUrl.userSubscriptionUrl,
+        headers: header2(),
+        body: {"amount": amonut, "package_id ": pId, "auth_id": uId},
+      );
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      String responseString;
+      if (response.statusCode == 200) {
+        responseString = response.body;
+        print(responseString);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("userSubscription ::: ${e.toString()}");
     }
     return null;
   }

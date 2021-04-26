@@ -63,6 +63,7 @@ class LogInController extends GetxController {
   dialogShowMethod(dialogShow) {
     dialogShow == true
         ? Get.defaultDialog(
+          barrierDismissible: false,
             title: "Loading....",
             content: Center(
               child: CircularProgressIndicator(
