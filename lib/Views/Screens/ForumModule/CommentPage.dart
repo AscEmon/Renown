@@ -1,4 +1,6 @@
+import 'package:TrainnigInfo/Controller/forumController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommentPage extends StatefulWidget {
   CommentPage({Key key}) : super(key: key);
@@ -8,6 +10,15 @@ class CommentPage extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentPage> {
+  final ForumController _forumController = Get.find<ForumController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var id = Get.arguments;
+    _forumController.commentGet(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,14 +33,36 @@ class _CommentPageState extends State<CommentPage> {
           ),
           centerTitle: true,
         ),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("Comment page"),
-              ],
-            ),
-          ),
+        body: Obx(
+          () {
+            return _forumController.isLoading2.value == true
+                ? Center(
+                    child: CircularProgressIndicator(backgroundColor: Colors.black,),
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 16, right: 16, left: 16),
+                          child: Card(
+                            elevation: 8,
+                            child: Container(
+                              height: 60,
+                              width: Get.width / 1.1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(_forumController
+                                    .commentList.value.result.post),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+          },
         ),
       ),
     );

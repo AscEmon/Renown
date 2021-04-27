@@ -1,6 +1,9 @@
-import 'package:TrainnigInfo/main.dart';
+import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
+import 'package:TrainnigInfo/Controller/forumController.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart'as http;
 
 class StatusPage extends StatefulWidget {
   StatusPage({Key key}) : super(key: key);
@@ -10,7 +13,10 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
-  TextEditingController forumTextController = TextEditingController();
+
+   final ForumController _forumController = Get.put(ForumController( repository:
+          MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
+     
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +32,7 @@ class _StatusPageState extends State<StatusPage> {
                     child: TextField(
                       autofocus: false,
                       focusNode: FocusNode(),
-                      controller: forumTextController,
+                      controller: _forumController.forumTextController,
                       maxLines: 10,
                       decoration: InputDecoration(
                           hintText: 'Whats on your mind?',
@@ -38,7 +44,7 @@ class _StatusPageState extends State<StatusPage> {
                   padding: const EdgeInsets.all(16.0),
                   child: InkWell(
                     onTap: () {
-                      saveData();
+                     _forumController.statusPostFunction();
                     },
                     child: Card(
                       elevation: 8,
@@ -67,10 +73,5 @@ class _StatusPageState extends State<StatusPage> {
     );
   }
 
-  void saveData() {
-    List postList = [];
-    postList.add(forumTextController.text);
-    userprefs.setString("Post", forumTextController.text);
-    forumTextController.clear();
-  }
+
 }

@@ -14,4 +14,7 @@ class AppUrl {
   static String adminPackagesStatusUrl = "$baseUrl/admin/change/package/status";
   static String adminRefreshTokenUrl = "$baseUrl/admin/refresh";
   static String adminVideoUrl = "$baseUrl/admin/video";
+  static String forumStatusUrl = "$baseUrl/auth/add/post";
+  static String forumUrl = "$baseUrl/auth/forum";
+  static String commentUrl = "$baseUrl/auth/reply";
 }

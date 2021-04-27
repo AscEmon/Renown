@@ -62,7 +62,8 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        floatingActionButton: InkWell(
+        floatingActionButton:   userMap["role"] == "admin"
+                                  ? InkWell(
           onTap: () {
             Get.toNamed(AppRoutes.ADMINVIDEOPOST, arguments: [
               "NotEdit",
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.black,
             child: Icon(Icons.add, color: Colors.white),
           ),
-        ),
+        ): Text(""),
         drawer: NavDrawer(),
         body: RefreshIndicator(
           backgroundColor: Colors.black,
@@ -153,59 +154,63 @@ class _HomePageState extends State<HomePage> {
                                   width: 22,
                                 ),
                               ),
-                              Positioned(
-                                top: 3,
-                                left: 40,
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      AppRoutes.ADMINVIDEOPOST,
-                                      arguments: [
-                                        "edit",
-                                        id,
-                                        title,
-                                        day,
-                                        description,
-                                        packageId,
-                                        startImg,
-                                        endImg,
-                                        publish,
-                                      ],
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: Colors.green,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 3,
-                                left: 80,
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                      title: "Delete Video",
-                                      middleText:
-                                          "Are you sure, You want to Delete this Video",
-                                      buttonColor: Colors.red,
-                                      cancelTextColor: Colors.black,
-                                      onCancel: () {},
-                                      onConfirm: () {
-                                        adminVideoController
-                                            .deleteAdminVideo(id);
-                                             Get.back();
-                                      },
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
+                              userMap["role"] == "admin"
+                                  ? Positioned(
+                                      top: 3,
+                                      left: 40,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.toNamed(
+                                            AppRoutes.ADMINVIDEOPOST,
+                                            arguments: [
+                                              "edit",
+                                              id,
+                                              title,
+                                              day,
+                                              description,
+                                              packageId,
+                                              startImg,
+                                              endImg,
+                                              publish,
+                                            ],
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: Colors.green,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    )
+                                  : Text(""),
+                              userMap["role"] == "admin"
+                                  ? Positioned(
+                                      top: 3,
+                                      left: 80,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.defaultDialog(
+                                            title: "Delete Video",
+                                            middleText:
+                                                "Are you sure, You want to Delete this Video",
+                                            buttonColor: Colors.red,
+                                            cancelTextColor: Colors.black,
+                                            onCancel: () {},
+                                            onConfirm: () {
+                                              adminVideoController
+                                                  .deleteAdminVideo(id);
+                                              Get.back();
+                                            },
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    )
+                                  : Text(""),
                             ],
                           );
                         },

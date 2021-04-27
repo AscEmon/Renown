@@ -25,8 +25,10 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
       appBar: AppBar(
           actions: [
             InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.ADMINPACKAGES, arguments: [
+              onTap: () {
+                Get.toNamed(
+                  AppRoutes.ADMINPACKAGES,
+                  arguments: [
                     "NotEdit",
                     "NotEdit",
                     "NotEdit",
@@ -34,12 +36,14 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                     "NotEdit",
                     "NotEdit",
                     "NotEdit",
-                  ]);
-                },
-                child: Icon(
-                  Icons.add_moderator,
-                  color: Colors.white,
-                )),
+                  ],
+                );
+              },
+              child: Icon(
+                Icons.add_moderator,
+                color: Colors.white,
+              ),
+            ),
             SizedBox(
               width: 20,
             ),

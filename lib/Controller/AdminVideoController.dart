@@ -61,7 +61,6 @@ class AdminVideoController extends GetxController {
         videoList(videos);
       }
     } finally {
-      Future.delayed(Duration(seconds: 5));
       isLoading(false);
     }
   }

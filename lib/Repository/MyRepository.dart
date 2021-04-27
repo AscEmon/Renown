@@ -27,6 +27,14 @@ class MyRepository {
     return apiClient.adminVideoGet();
   }
 
+  forumStatusGet() {
+    return apiClient.statusGet();
+  }
+
+  commentGet(var id) {
+    return apiClient.commentGet(id);
+  }
+
   adminPackagesModifyPut(var id, String title, String price, String description,
       String active, File image) {
     return apiClient.adminPackagesModifyPut(
@@ -74,8 +82,13 @@ class MyRepository {
   refreshTokenPost() {
     return apiClient.refreashTokenPost();
   }
-  userSubscriptionPost(var amonut,var pId,var uId){
+
+  userSubscriptionPost(var amonut, var pId, var uId) {
     return apiClient.userSubscription(amonut, pId, uId);
+  }
+
+  statusPost(String status) {
+    return apiClient.statusPost(status);
   }
 
   adminPackages(String title, String price, String description, String active,
@@ -87,7 +100,8 @@ class MyRepository {
   deleteAdminPackages(var id) {
     return apiClient.deleteAdminPakages(id);
   }
-   deleteAdminVideo(var id) {
+
+  deleteAdminVideo(var id) {
     return apiClient.deleteAdminVideo(id);
   }
 }

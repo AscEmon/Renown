@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
 import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
+import 'package:TrainnigInfo/Model/CommentModel.dart';
+import 'package:TrainnigInfo/Model/ForumModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
 import 'package:TrainnigInfo/Model/TotalUserModel.dart';
 import 'package:TrainnigInfo/Model/UserPackagesModel.dart';
@@ -27,6 +29,13 @@ class MyApiClient {
   static header2() => {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${userMap["access_token"]}'
+      };
+
+  //this is the header where user token and id is store and its use in Forum portion
+  static header3() => {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${userMap["access_token"]}',
+        'user_id': '${userMap["data"]["id"]}'
       };
 
 //User Packages  Api Calling
@@ -154,6 +163,47 @@ class MyApiClient {
       }
     } catch (e) {
       print("adminVideoGet ::: ${e.toString()}");
+    }
+  }
+
+  //Forum Status   GET  Api Calling
+  statusGet() async {
+    try {
+      var response = await httpClient.get(AppUrl.forumUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Forum Status Get");
+        print(response.body);
+        String jsonResponseString = response.body;
+        print(response.body);
+        return forumModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("statusGet ::: ${e.toString()}");
+    }
+  }
+
+  //Comment GET  Api Calling
+  commentGet(var id) async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.commentUrl + "/$id", headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Comment Get");
+        print(response.body);
+        String jsonResponseString = response.body;
+        print(response.body);
+        return commentModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("commentGet ::: ${e.toString()}");
     }
   }
 
@@ -508,7 +558,7 @@ class MyApiClient {
 //User Subscription Api is calling which is come from UserSubsCription Controller
   Future<bool> userSubscription(var amonut, var pId, var uId) async {
     print("apiProvider userSubscription");
-     print(userMap["access_token"]);
+    print(userMap["access_token"]);
     try {
       final response = await httpClient.post(
         AppUrl.userSubscriptionUrl,
@@ -527,6 +577,33 @@ class MyApiClient {
       }
     } catch (e) {
       print("userSubscription ::: ${e.toString()}");
+    }
+    return null;
+  }
+
+  //Status is post by using this function
+  Future<bool> statusPost(String status) async {
+    try {
+      final response = await httpClient.post(
+        AppUrl.forumStatusUrl,
+        headers: header3(),
+        body: {
+          "post": status,
+        },
+      );
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      String responseString;
+      if (response.statusCode == 200) {
+        print("Done post in forum");
+        responseString = response.body;
+        print(responseString);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("statusPost ::: ${e.toString()}");
     }
     return null;
   }
