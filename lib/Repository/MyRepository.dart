@@ -90,6 +90,9 @@ class MyRepository {
   statusPost(String status) {
     return apiClient.statusPost(status);
   }
+  replyPost(String reply,var id) {
+    return apiClient.replyPost(reply, id.toString());
+  }
 
   adminPackages(String title, String price, String description, String active,
       File image) {

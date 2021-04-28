@@ -2,7 +2,6 @@ import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 import 'package:TrainnigInfo/Controller/forumController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
-import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -31,9 +30,12 @@ class _PostVisiblePageState extends State<PostVisiblePage> {
     return RefreshIndicator(
       backgroundColor: Colors.black,
       onRefresh: () {
-        return Future.delayed(Duration(seconds: 1), () {
-          _forumController.fetchForumStatus();
-        });
+        return Future.delayed(
+          Duration(seconds: 1),
+          () {
+            _forumController.fetchForumStatus();
+          },
+        );
       },
       child: Container(
         height: Get.height,
@@ -147,6 +149,14 @@ class _PostVisiblePageState extends State<PostVisiblePage> {
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                      ),
+                                        Positioned(
+                                        top: 30,
+                                        left: 26,
+                                        child: Container(
+                                        height: 2,
+                                        width: Get.width/1.19,
+                                        color: Colors.black,)
                                       ),
                                     ],
                                   ),

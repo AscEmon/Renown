@@ -16,6 +16,13 @@ class _StatusPageState extends State<StatusPage> {
 
    final ForumController _forumController = Get.put(ForumController( repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
+          @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _forumController.replyTextController.clear();
+    _forumController.forumTextController.clear();
+  }
      
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,7 @@ class _StatusPageState extends State<StatusPage> {
                     child: Card(
                       elevation: 8,
                       child: Container(
-                        color: Colors.blue,
+                        color: Colors.black,
                         height: 40,
                         width: Get.width,
                         child: Center(

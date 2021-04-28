@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences userprefs;
 //This is store value of userSharedPreferences
+
+
 String user = userprefs.getString("userInfos");
 Map<String, dynamic> userMap = jsonDecode(user);
 // print("${userMap["data"]["email"]}");

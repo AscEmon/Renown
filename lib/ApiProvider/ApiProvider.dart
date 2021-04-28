@@ -35,7 +35,7 @@ class MyApiClient {
   static header3() => {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${userMap["access_token"]}',
-        'user_id': '${userMap["data"]["id"]}'
+        'auth_id': '${userMap["data"]["id"]}'
       };
 
 //User Packages  Api Calling
@@ -290,17 +290,18 @@ class MyApiClient {
         responseString = response.body;
         return true;
       } else if (response.statusCode == 401) {
-        print("working RefreshToken");
-        await refreashTokenPost().then(
-          (refresh) {
-            if (refresh == true) {
-              logOutPost();
-            } else {
-              // GETX.Get.offAndToNamed(AppRoutes.LOGIN);
-              GETX.Get.snackbar("Refresh Erron", "Pls Uninstall the app ");
-            }
-          },
-        );
+        GETX.Get.snackbar("Refresh Error", "Pls Uninstall the app");
+        GETX.Get.offAllNamed(AppRoutes.LOGIN);
+        // await refreashTokenPost().then(
+        //   (refresh) {
+        //     if (refresh == true) {
+        //       logOutPost();
+        //     } else {
+        //       // GETX.Get.offAndToNamed(AppRoutes.LOGIN);
+
+        //     }
+        //   },
+        // );
       } else {
         print(response.statusCode);
         print(response.body);
@@ -608,6 +609,34 @@ class MyApiClient {
     return null;
   }
 
+//Status is post by using this function
+  Future<bool> replyPost(String reply,var forumId) async {
+    try {
+      final response = await httpClient.post(
+        AppUrl.replyUrl,
+        headers: header3(),
+        body: {
+          "forum_id" : forumId.toString(),
+          "reply": reply,
+          
+        },
+      );
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      String responseString;
+      if (response.statusCode == 200) {
+        print("Done reply in Comment");
+        responseString = response.body;
+        print(responseString);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("replyPost ::: ${e.toString()}");
+    }
+    return null;
+  }
 //AdnminPackages Delete  Api Calling
   deleteAdminPakages(var id) async {
     try {

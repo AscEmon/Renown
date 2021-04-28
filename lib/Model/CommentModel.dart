@@ -43,7 +43,7 @@ class Result {
     String post;
     DateTime createdAt;
     DateTime updatedAt;
-    List<dynamic> reply;
+    List<Reply> reply;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
@@ -51,7 +51,7 @@ class Result {
         post: json["post"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        reply: List<dynamic>.from(json["reply"].map((x) => x)),
+        reply: List<Reply>.from(json["reply"].map((x) => Reply.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -60,6 +60,42 @@ class Result {
         "post": post,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "reply": List<dynamic>.from(reply.map((x) => x)),
+        "reply": List<dynamic>.from(reply.map((x) => x.toJson())),
+    };
+}
+
+class Reply {
+    Reply({
+        this.id,
+        this.userId,
+        this.forumId,
+        this.reply,
+        this.createdAt,
+        this.updatedAt,
+    });
+
+    int id;
+    String userId;
+    String forumId;
+    String reply;
+    DateTime createdAt;
+    DateTime updatedAt;
+
+    factory Reply.fromJson(Map<String, dynamic> json) => Reply(
+        id: json["id"],
+        userId: json["user_id"],
+        forumId: json["forum_id"],
+        reply: json["reply"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "forum_id": forumId,
+        "reply": reply,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
     };
 }

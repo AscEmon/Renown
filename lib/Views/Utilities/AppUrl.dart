@@ -17,4 +17,5 @@ class AppUrl {
   static String forumStatusUrl = "$baseUrl/auth/add/post";
   static String forumUrl = "$baseUrl/auth/forum";
   static String commentUrl = "$baseUrl/auth/reply";
+  static String replyUrl = "$baseUrl/auth/add/reply";
 }

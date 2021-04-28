@@ -1,6 +1,7 @@
 import 'package:TrainnigInfo/Model/CommentModel.dart';
 import 'package:TrainnigInfo/Model/ForumModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,14 +10,17 @@ class ForumController extends GetxController {
   MyRepository repository;
   ForumController({@required this.repository});
   TextEditingController forumTextController = TextEditingController();
+  TextEditingController replyTextController = TextEditingController();
   var isLoading = true.obs;
   var isLoading2 = true.obs;
   var forumList = ForumModel().obs;
   var commentList = CommentModel().obs;
-
+  var id;
   @override
   void onInit() {
     // TODO: implement onInit
+    forumTextController.clear();
+    replyTextController.clear();
     isInternet().then(
       (internet) {
         if (internet == true) {
@@ -62,9 +66,10 @@ class ForumController extends GetxController {
             await repository.statusPost(forumTextController.text).then(
               (stausPost) {
                 if (stausPost == true) {
-                  Get.back(closeOverlays: true);
+                  Get.back(closeOverlays: true, canPop: true);
                   dialogShowMethod(false);
-                  // Get.offAndToNamed(AppRoutes.HOMEPAGE);
+                  fetchForumStatus();
+                  Get.offAndToNamed(AppRoutes.FORUM);
                   forumTextController.clear();
                   update();
                 } else {
@@ -91,7 +96,7 @@ class ForumController extends GetxController {
     update();
   }
 
-  void commentGet(var id) async {
+  void commentGet(id) async {
     try {
       isLoading2(true);
       var comments = await repository.commentGet(id);
@@ -103,6 +108,39 @@ class ForumController extends GetxController {
     }
   }
 
+  replyPostFunction(var forumId) async {
+    if (replyTextController.text != null) {
+      isInternet().then(
+        (internet) async {
+          if (internet == true) {
+            await repository.replyPost(replyTextController.text, forumId).then(
+              (replyPost) {
+                if (replyPost == true) {
+                  replyTextController.text= "";
+                  update();
+                } else {
+                  Get.snackbar("Error", "Something is Occured");
+                }
+              },
+            );
+          } else {
+            Get.defaultDialog(
+              title: "Internet Problem",
+              content: Image.asset(
+                "images/NoInternet_ic.png",
+              ),
+              buttonColor: Colors.black,
+              onConfirm: () {
+                Get.back();
+              },
+            );
+          }
+        },
+      );
+    } else {}
+    update();
+  }
+
   dialogShowMethod(dialogShow) {
     dialogShow == true
         ? Get.defaultDialog(
@@ -112,7 +150,8 @@ class ForumController extends GetxController {
               child: CircularProgressIndicator(
                 backgroundColor: Colors.red,
               ),
-            ))
+            ),
+          )
         : Get.defaultDialog(
             barrierDismissible: false,
             title: "Status",
