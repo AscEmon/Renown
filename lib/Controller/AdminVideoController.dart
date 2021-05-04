@@ -89,10 +89,6 @@ class AdminVideoController extends GetxController {
     update();
   }
 
-  temp() async {
-    await repository.refreshTokenPost();
-  }
-
   videoFilePick() async {
     FilePickerResult result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
@@ -155,6 +151,7 @@ class AdminVideoController extends GetxController {
                   publishDropDn = "";
                   packagesSelect = null;
                   videoFile = null;
+                  update();
                 } else {
                   Get.snackbar("Error", "Please Check All the field Properly",
                       snackPosition: SnackPosition.BOTTOM,
@@ -224,6 +221,7 @@ class AdminVideoController extends GetxController {
                 publishDropDn = "";
                 packagesSelect = null;
                 videoFile = null;
+                update();
               } else {
                 Get.snackbar("Error", "Please Check All the field Properly",
                     snackPosition: SnackPosition.BOTTOM,
