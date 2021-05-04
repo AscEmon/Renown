@@ -6,6 +6,8 @@ import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/StatusPage.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/TotalUser.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/PreviousActivity.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/TodaysActivity.dart';
 import 'package:TrainnigInfo/Views/Screens/PicturePage.dart';
 import 'package:TrainnigInfo/Views/Screens/SubscriptionPage.dart';
 import 'package:get/get.dart';
@@ -14,8 +16,6 @@ import '../../Views/Screens/LoginPage.dart';
 import '../../Views/Screens/SignUpPage.dart';
 import '../../Views/Screens/SplashPage.dart';
 import '../../Views/Screens/NavDrawerScreen/Packages.dart';
-
-
 
 class AppRoutes {
   static String INITIAL = "/";
@@ -36,6 +36,8 @@ class AppRoutes {
   static String ADMINVIDEOPOST = "AdminVideoPost";
   static String PAYMENTVIEWPAGE = "PaymentViewPage";
   static String WEBVIEWPAYMENTDATAPAGE = "PaymentDataPage";
+  static String TODAYSACTIVITY = "TodaysActivity";
+  static String PREVIOUSACTIVITY = "PreviousActivity";
 
   static List<GetPage> AppRoutesList() {
     return [
@@ -55,8 +57,8 @@ class AppRoutes {
       GetPage(name: ADMINPACKAGESGET, page: () => AdminPackagesGet()),
       GetPage(name: TOTALUSER, page: () => TotalUser()),
       GetPage(name: ADMINVIDEOPOST, page: () => AdminVideoPost()),
-      // GetPage(name: PAYMENTVIEWPAGE, page: () => PaymentWebView()),
-
+      GetPage(name: TODAYSACTIVITY, page: () => TodaysActivity()),
+      GetPage(name: PREVIOUSACTIVITY, page: () => PreviousActivity()),
     ];
   }
 }

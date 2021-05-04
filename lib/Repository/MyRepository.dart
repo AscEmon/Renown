@@ -79,8 +79,12 @@ class MyRepository {
         packageId, startImg, endImg, pubLish, video);
   }
 
-  refreshTokenPost() {
-    return apiClient.refreashTokenPost();
+  todayVideo() {
+    return apiClient.todayVideo();
+  }
+
+  previousActivity() {
+    return apiClient.previousActivityGet();
   }
 
   userSubscriptionPost(var amonut, var pId, var uId) {
@@ -90,8 +94,13 @@ class MyRepository {
   statusPost(String status) {
     return apiClient.statusPost(status);
   }
-  replyPost(String reply,var id) {
+
+  replyPost(String reply, var id) {
     return apiClient.replyPost(reply, id.toString());
+  }
+
+  imgSentPost(var vidoeId, var packageId, var day, var check, File image) {
+    return apiClient.imgSent(vidoeId, packageId, day, check, image);
   }
 
   adminPackages(String title, String price, String description, String active,

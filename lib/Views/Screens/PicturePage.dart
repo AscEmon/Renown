@@ -50,6 +50,11 @@ class _PicturePageState extends State<PicturePage> {
     );
   }
 
+  var videoId = Get.arguments[0];
+  var pckgId = Get.arguments[1];
+  var day = Get.arguments[2];
+  var check =Get.arguments[3];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -125,7 +130,14 @@ class _PicturePageState extends State<PicturePage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    print("pictureController");
+                    print("video :"+videoId.toString());
+                    print("pckage: "+pckgId.toString());
+                    print("day "+day.toString());
+                    pictureTakeController.sendImage(
+                        videoId.toString(), pckgId.toString(), day.toString(),check);
+                  },
                 )
               ],
             ),

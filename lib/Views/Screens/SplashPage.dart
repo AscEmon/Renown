@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:TrainnigInfo/Controller/LoginController.dart';
 import 'package:TrainnigInfo/Controller/SignUpController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
   void navigationPage() async {
     try {
       bool loginstatus=userprefs.getBool("loginStatus");
-      loginstatus==true?Get.offAndToNamed(AppRoutes.HOMEPAGE):loginstatus==null?Get.offAndToNamed(AppRoutes.LOGIN):Get.offAndToNamed(AppRoutes.LOGIN);
+      (loginstatus==true && userMap['role']=="admin")?Get.offAndToNamed(AppRoutes.HOMEPAGE): (loginstatus==true && userMap['role']=="user")?Get.offAndToNamed(AppRoutes.TODAYSACTIVITY):loginstatus==null?Get.offAndToNamed(AppRoutes.LOGIN):Get.offAndToNamed(AppRoutes.LOGIN);
     } catch (e) {
       print(e.toString());
     }

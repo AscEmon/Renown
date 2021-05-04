@@ -5,7 +5,9 @@ import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
 import 'package:TrainnigInfo/Model/CommentModel.dart';
 import 'package:TrainnigInfo/Model/ForumModel.dart';
+import 'package:TrainnigInfo/Model/PreeviousActivity.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
+import 'package:TrainnigInfo/Model/TodayModel.dart';
 import 'package:TrainnigInfo/Model/TotalUserModel.dart';
 import 'package:TrainnigInfo/Model/UserPackagesModel.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
@@ -36,6 +38,11 @@ class MyApiClient {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${userMap["access_token"]}',
         'auth_id': '${userMap["data"]["id"]}'
+      };
+  static header4() => {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${userMap["access_token"]}',
+        'user_id': '${userMap["data"]["id"]}'
       };
 
 //User Packages  Api Calling
@@ -207,6 +214,27 @@ class MyApiClient {
     }
   }
 
+//Previous Activity for USer which is History Api is Calling here
+  previousActivityGet() async {
+    try {
+      var response =
+          await httpClient.get(AppUrl.previousActivityUrl, headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("previousActivity Get");
+        print(response.body);
+        String jsonResponseString = response.body;
+        print(response.body);
+        return previousActivityModelFromJson(jsonResponseString);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("previousActivityGet ::: ${e.toString()}");
+    }
+  }
+
 //this is for SignUp APi where name, email and Password are come from SignUpController
   Future<SingUpModel> signUpPost(
       String name, String email, String password) async {
@@ -292,16 +320,6 @@ class MyApiClient {
       } else if (response.statusCode == 401) {
         GETX.Get.snackbar("Refresh Error", "Pls Uninstall the app");
         GETX.Get.offAllNamed(AppRoutes.LOGIN);
-        // await refreashTokenPost().then(
-        //   (refresh) {
-        //     if (refresh == true) {
-        //       logOutPost();
-        //     } else {
-        //       // GETX.Get.offAndToNamed(AppRoutes.LOGIN);
-
-        //     }
-        //   },
-        // );
       } else {
         print(response.statusCode);
         print(response.body);
@@ -408,30 +426,27 @@ class MyApiClient {
     return null;
   }
 
-  //RefreshToken After expiry in 1 hour it will be call from LoginController
-  Future<bool> refreashTokenPost() async {
-    print("apiProvider RefreshToken");
+  //TodaVideo for user HomePage
+  Future<TodayModel> todayVideo() async {
+    print("apiProvider todayVideo");
     print(userMap["access_token"]);
     try {
       http.Response response;
       response = await http.post(
-        Uri.parse(AppUrl.adminRefreshTokenUrl),
+        AppUrl.todayActivityUrl,
         headers: header2(),
       );
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
       String responseString;
       if (response.statusCode == 200) {
         responseString = response.body;
-        print(responseString);
-        userprefs.setString("userInfos", responseString);
-        userMap = jsonDecode(responseString);
-        return true;
+        return todayModelFromJson(responseString);
       } else {
         print(response.statusCode);
         print(response.body);
       }
     } catch (e) {
-      print("RefreshToken ::: ${e.toString()}");
+      print("todayVideo ::: ${e.toString()}");
     }
     return null;
   }
@@ -610,15 +625,14 @@ class MyApiClient {
   }
 
 //Status is post by using this function
-  Future<bool> replyPost(String reply,var forumId) async {
+  Future<bool> replyPost(String reply, var forumId) async {
     try {
       final response = await httpClient.post(
         AppUrl.replyUrl,
         headers: header3(),
         body: {
-          "forum_id" : forumId.toString(),
+          "forum_id": forumId.toString(),
           "reply": reply,
-          
         },
       );
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
@@ -637,6 +651,57 @@ class MyApiClient {
     }
     return null;
   }
+
+  Future<bool> imgSent(
+      var vidoeId, var packageId, var day, var check, File image) async {
+    print("apiProvider imgSent");
+    print("video :" + vidoeId.toString());
+    print("pckage: " + packageId.toString());
+    print("day " + day.toString());
+
+    try {
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap(
+        check == "start"
+            ? {
+                "video_id": vidoeId.toString(),
+                "package_id": packageId.toString(),
+                "day": day.toString(),
+                "startingImage": await MultipartFile.fromFile(
+                  image.path,
+                ),
+              }
+            : {
+                "video_id": vidoeId.toString(),
+                "package_id": packageId.toString(),
+                "day": day.toString(),
+                "endingImage": await MultipartFile.fromFile(
+                  image.path,
+                ),
+              },
+      );
+      var response = await dio.post(
+        check == "start" ? AppUrl.startingImageUrl : AppUrl.endingImageUrl,
+        data: formData,
+        options: Options(
+          headers: header4(),
+        ),
+      );
+      if (response.statusCode == 200) {
+        print("imgSent  Done");
+        print(response.data);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.data);
+        return false;
+      }
+    } catch (e) {
+      print("imgSent ${e.toString()}");
+    }
+    return null;
+  }
+
 //AdnminPackages Delete  Api Calling
   deleteAdminPakages(var id) async {
     try {

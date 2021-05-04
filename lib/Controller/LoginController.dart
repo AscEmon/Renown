@@ -1,5 +1,6 @@
 import 'package:TrainnigInfo/Views/Screens/LoginPage.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
@@ -31,8 +32,10 @@ class LogInController extends GetxController {
                 .then(
               (login) {
                 if (login == true) {
-                   Get.back(closeOverlays: true);
-                  Get.offAndToNamed(AppRoutes.HOMEPAGE);
+                  Get.back(closeOverlays: true);
+                  userMap["role"] == "admin"
+                      ? Get.offAndToNamed(AppRoutes.HOMEPAGE)
+                      : Get.offAndToNamed(AppRoutes.TODAYSACTIVITY);
                   emailLogin.clear();
                   passwordLogin.clear();
                   adminCheck = false;
@@ -63,7 +66,7 @@ class LogInController extends GetxController {
   dialogShowMethod(dialogShow) {
     dialogShow == true
         ? Get.defaultDialog(
-          barrierDismissible: false,
+            barrierDismissible: false,
             title: "Loading....",
             content: Center(
               child: CircularProgressIndicator(
@@ -76,10 +79,9 @@ class LogInController extends GetxController {
             middleText: "Your Email and Password is not matching",
             confirmTextColor: Colors.white,
             buttonColor: Colors.black,
-            onConfirm: (){
+            onConfirm: () {
               Get.back();
-            }
-          );
+            });
 
     update();
   }

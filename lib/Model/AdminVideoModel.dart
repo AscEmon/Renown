@@ -42,6 +42,7 @@ class Result {
         this.publish,
         this.createdAt,
         this.updatedAt,
+        this.package,
     });
 
     int id;
@@ -56,6 +57,7 @@ class Result {
     String publish;
     DateTime createdAt;
     DateTime updatedAt;
+    Package package;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
@@ -70,6 +72,7 @@ class Result {
         publish: json["publish"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        package: Package.fromJson(json["package"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -83,6 +86,55 @@ class Result {
         "startingImage": startingImage,
         "endinggImage": endinggImage,
         "publish": publish,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "package": package.toJson(),
+    };
+}
+
+class Package {
+    Package({
+        this.id,
+        this.title,
+        this.price,
+        this.image,
+        this.description,
+        this.active,
+        this.duration,
+        this.createdAt,
+        this.updatedAt,
+    });
+
+    int id;
+    String title;
+    String price;
+    String image;
+    String description;
+    String active;
+    String duration;
+    DateTime createdAt;
+    DateTime updatedAt;
+
+    factory Package.fromJson(Map<String, dynamic> json) => Package(
+        id: json["id"],
+        title: json["title"],
+        price: json["price"],
+        image: json["image"],
+        description: json["description"],
+        active: json["active"],
+        duration: json["duration"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "price": price,
+        "image": image,
+        "description": description,
+        "active": active,
+        "duration": duration,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };

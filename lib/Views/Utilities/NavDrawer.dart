@@ -62,33 +62,32 @@ class _NavDrawerState extends State<NavDrawer> {
                 ? Container(
                     child: Column(
                       children: [
+                        // NavDrawerTile(
+                        //   navIcon: Icons.preview,
+                        //   navTitle: 'Previous Activity',
+                        //   onNavPress: () {
+                        //     // Get.toNamed(AppRoutes.TRANSFERHISTORY);
+                        //   },
+                        // ),
+                        // NavDrawerTile(
+                        //   navIcon: Icons.today,
+                        //   navTitle: "Todays Activity",
+                        //   onNavPress: () {
+                        //     Get.toNamed(AppRoutes.TODAYSACTIVITY);
+                        //   },
+                        // ),
+                        // NavDrawerTile(
+                        //   navIcon: Icons.grain,
+                        //   navTitle: 'Packages',
+                        //   onNavPress: () {
+                        //     Get.toNamed(AppRoutes.PACKAGES);
+                        //   },
+                        // ),
                         NavDrawerTile(
-                          navIcon: Icons.preview,
-                          navTitle: 'Previous Activity',
-                          onNavPress: () {
-                            // Get.toNamed(AppRoutes.TRANSFERHISTORY);
-                          },
-                        ),
-                        NavDrawerTile(
-                          navIcon: Icons.today,
-                          navTitle: "Todays Activity",
-                          onNavPress: () {
-                            userprefs.clear();
-                            // Get.toNamed(AppRoutes.INVOICEPAGE);
-                          },
-                        ),
-                        NavDrawerTile(
-                          navIcon: Icons.grain,
-                          navTitle: 'Packages',
-                          onNavPress: () {
-                            Get.toNamed(AppRoutes.PACKAGES);
-                          },
-                        ),
-                          NavDrawerTile(
                           navIcon: Icons.chat,
                           navTitle: 'Live Chat',
                           onNavPress: () {
-                           // Get.toNamed(AppRoutes.ADMINPACKAGESGET);
+                            // Get.toNamed(AppRoutes.ADMINPACKAGESGET);
                           },
                         ),
                         NavDrawerTile(
@@ -140,17 +139,16 @@ class _NavDrawerState extends State<NavDrawer> {
                           navIcon: Icons.preview,
                           navTitle: 'Previous Activity',
                           onNavPress: () {
-                            // Get.toNamed(AppRoutes.TRANSFERHISTORY);
+                            Get.toNamed(AppRoutes.PREVIOUSACTIVITY);
                           },
                         ),
-                        NavDrawerTile(
-                          navIcon: Icons.today,
-                          navTitle: "Todays Activity",
-                          onNavPress: () {
-                            userprefs.clear();
-                            // Get.toNamed(AppRoutes.INVOICEPAGE);
-                          },
-                        ),
+                        //  NavDrawerTile(
+                        //   navIcon: Icons.today,
+                        //   navTitle: "Todays Activity",
+                        //   onNavPress: () {
+                        //     Get.toNamed(AppRoutes.TODAYSACTIVITY);
+                        //   },
+                        // ),
                         NavDrawerTile(
                           navIcon: Icons.grain,
                           navTitle: 'Packages',

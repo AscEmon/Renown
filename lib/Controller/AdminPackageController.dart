@@ -149,6 +149,7 @@ class AdminPackageController extends GetxController {
               profile = null;
               activeText = "";
               FocusScope.of(context).unfocus();
+              update();
             } else {
               Get.snackbar("Error", "Please Check All the field Properly",
                   snackPosition: SnackPosition.BOTTOM,
