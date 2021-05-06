@@ -29,4 +29,7 @@ class AppUrl {
   //Webview
   static String subscriptionUrl = "$baseUrl/mobile/payment";
   static String liveChatUserUrl = "$baseUrl/userchat";
+  static String adminChatUrl = "$baseUrl/adminchat";
+
+  
 }

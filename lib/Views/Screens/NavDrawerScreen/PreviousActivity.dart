@@ -48,8 +48,7 @@ class _PreviousActivityState extends State<PreviousActivity> {
                       backgroundColor: Colors.black,
                     ),
                   )
-                : previousController.previousActivityList.value.data ==
-                        null
+                : previousController.previousActivityList.value.data == null
                     ? Center(
                         child: Text(
                           " No history",
@@ -76,14 +75,6 @@ class _PreviousActivityState extends State<PreviousActivity> {
                                     .history
                                     .length,
                                 itemBuilder: (context, index) {
-                                  // var keys = previousController
-                                  //     .previousActivityList.value.data.keys
-                                  //     .toList();
-                                  //     print(previousController.previousActivityList.value
-                                  //   .data.history.keys.length);
-                                  // var values = previousController.previousActivityList
-                                  //     .value.data.history[keys[index]];
-                                  //     print(values);
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Card(

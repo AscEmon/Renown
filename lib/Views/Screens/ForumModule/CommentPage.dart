@@ -189,13 +189,13 @@ class _CommentPageState extends State<CommentPage> {
                                                                           index]
                                                                       .user
                                                                       .id
-                                                                      .toString());
+                                                                      .toString(),);
                                                             },
                                                             child: Icon(
                                                               Icons.delete,
                                                               color: Colors.red,
                                                               size: 30,
-                                                            )),
+                                                            ),),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(

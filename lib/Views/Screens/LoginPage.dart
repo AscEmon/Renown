@@ -6,12 +6,8 @@ import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:http/http.dart' as http;
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 
-
-
 //flag for AdminCheck which is Globally declare
 bool adminCheck = false;
-
-
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -21,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<LoginPage> {
-   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LogInController logInController = Get.put(LogInController(
       repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
@@ -102,11 +98,6 @@ class _SignUpPageState extends State<LoginPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Text("Log In",
-                            //     style: TextStyle(
-                            //         color: Colors.white,
-                            //         fontSize: 32,
-                            //         fontWeight: FontWeight.bold)),
                             Image.asset(
                               'images/Renown_logo.png',
                               height: 100,
@@ -187,7 +178,6 @@ class _SignUpPageState extends State<LoginPage> {
                                   return null;
                               },
                             ),
-
                             Theme(
                               data: ThemeData(
                                   unselectedWidgetColor: Colors.white),
@@ -226,7 +216,8 @@ class _SignUpPageState extends State<LoginPage> {
                                     fontSize: 20),
                               ),
                               onPressed: () {
-                                logInController.loginFunction(adminCheck,_formKey);
+                                logInController.loginFunction(
+                                    adminCheck, _formKey);
                                 FocusScope.of(context).unfocus();
                               },
                             ),

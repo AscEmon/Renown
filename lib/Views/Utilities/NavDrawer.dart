@@ -7,6 +7,8 @@ import 'package:http/http.dart';
 import 'package:TrainnigInfo/main.dart';
 import 'package:TrainnigInfo/Views/Widget/NavDrawerTile.dart';
 
+
+
 class NavDrawer extends StatefulWidget {
   @override
   _NavDrawerState createState() => _NavDrawerState();
@@ -62,34 +64,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ? Container(
                     child: Column(
                       children: [
-                        // NavDrawerTile(
-                        //   navIcon: Icons.preview,
-                        //   navTitle: 'Previous Activity',
-                        //   onNavPress: () {
-                        //     // Get.toNamed(AppRoutes.TRANSFERHISTORY);
-                        //   },
-                        // ),
-                        // NavDrawerTile(
-                        //   navIcon: Icons.today,
-                        //   navTitle: "Todays Activity",
-                        //   onNavPress: () {
-                        //     Get.toNamed(AppRoutes.TODAYSACTIVITY);
-                        //   },
-                        // ),
-                        // NavDrawerTile(
-                        //   navIcon: Icons.grain,
-                        //   navTitle: 'Packages',
-                        //   onNavPress: () {
-                        //     Get.toNamed(AppRoutes.PACKAGES);
-                        //   },
-                        // ),
-                        NavDrawerTile(
-                          navIcon: Icons.chat,
-                          navTitle: 'Live Chat',
-                          onNavPress: () {
-                            // Get.toNamed(AppRoutes.ADMINPACKAGESGET);
-                          },
-                        ),
+  
                         NavDrawerTile(
                           navIcon: Icons.grading,
                           navTitle: 'Admin Packages',
@@ -102,6 +77,13 @@ class _NavDrawerState extends State<NavDrawer> {
                           navTitle: 'Admin',
                           onNavPress: () {
                             Get.toNamed(AppRoutes.DASHBOARD);
+                          },
+                        ),
+                         NavDrawerTile(
+                          navIcon: Icons.chat,
+                          navTitle: 'Live Chat',
+                          onNavPress: () {
+                           Get.toNamed(AppRoutes.LIVECHATWEBVIEW);
                           },
                         ),
                         NavDrawerTile(
@@ -142,13 +124,6 @@ class _NavDrawerState extends State<NavDrawer> {
                             Get.toNamed(AppRoutes.PREVIOUSACTIVITY);
                           },
                         ),
-                        //  NavDrawerTile(
-                        //   navIcon: Icons.today,
-                        //   navTitle: "Todays Activity",
-                        //   onNavPress: () {
-                        //     Get.toNamed(AppRoutes.TODAYSACTIVITY);
-                        //   },
-                        // ),
                         NavDrawerTile(
                           navIcon: Icons.grain,
                           navTitle: 'Packages',

@@ -13,7 +13,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SignUpController signUpController = Get.put(SignUpController(
       repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
@@ -80,14 +80,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   width: 300,
                                   fit: BoxFit.contain,
                                 ),
-                                // Text(
-                                //   "Sign Up",
-                                //   style: TextStyle(
-                                //       color: Colors.white,
-                                //       fontSize: 32,
-                                //       fontWeight: FontWeight.bold),
-                                // ),
-
                                 TextFormField(
                                   maxLines: 1,
                                   controller:
@@ -160,42 +152,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                       return null;
                                   },
                                 ),
-                                // SizedBox(height: 8),
-                                // TextFormField(
-                                //   maxLines: 1,
-                                //   controller:
-                                //       signUpController.phoneControllerSingUp,
-                                //   cursorColor: Colors.white,
-                                //   keyboardType: TextInputType.phone,
-                                //   style: TextStyle(color: Colors.white),
-                                //   decoration: new InputDecoration(
-                                //     labelText: 'Phone Number',
-                                //     labelStyle: TextStyle(color: Colors.white),
-                                //     suffixIcon: Icon(
-                                //       Icons.phone,
-                                //       color: Colors.white,
-                                //     ),
-                                //     focusedBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10.0),
-                                //       borderSide: BorderSide(
-                                //         color: Colors.white,
-                                //       ),
-                                //     ),
-                                //     enabledBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10.0),
-                                //       borderSide: BorderSide(
-                                //         color: Colors.white,
-                                //         width: 1.0,
-                                //       ),
-                                //     ),
-                                //   ),
-                                //   validator: (value) {
-                                //     if (value.trim().isEmpty)
-                                //       return "Phone Number is Required";
-                                //     else
-                                //       return null;
-                                //   },
-                                // ),
                                 SizedBox(height: 8),
                                 TextFormField(
                                   maxLines: 1,
@@ -286,7 +242,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         fontSize: 20),
                                   ),
                                   onPressed: () async {
-                                    await signUpController.signUpFunction(_formKey);
+                                    await signUpController
+                                        .signUpFunction(_formKey);
                                     FocusScope.of(context).unfocus();
                                   },
                                 ),

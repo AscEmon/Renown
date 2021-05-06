@@ -142,7 +142,7 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(AppRoutes.TOTALUSER);
                       },
                       child: Container(
@@ -221,11 +221,10 @@ class _DashboardState extends State<Dashboard> {
                     child: Obx(
                       () {
                         return _adminDashBoardController.isLoading.value == true
-                            ? Align(
-                                child: LinearProgressIndicator(
-                                  backgroundColor: Colors.white,
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.black,
                                 ),
-                                alignment: Alignment.topCenter,
                               )
                             : Padding(
                                 padding: const EdgeInsets.all(16.0),

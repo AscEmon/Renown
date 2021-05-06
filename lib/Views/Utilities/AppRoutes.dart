@@ -11,7 +11,6 @@ import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/PreviousActivity.dart
 import 'package:TrainnigInfo/Views/Screens/PaymentWebView.dart';
 import 'package:TrainnigInfo/Views/Screens/UserHomePage.dart';
 import 'package:TrainnigInfo/Views/Screens/PicturePage.dart';
-import 'package:TrainnigInfo/Views/Screens/SubscriptionPage.dart';
 import 'package:get/get.dart';
 import '../../Views/Screens/Admin/AdminHomePage.dart';
 import '../../Views/Screens/LoginPage.dart';
@@ -47,7 +46,6 @@ class AppRoutes {
       GetPage(name: LOGIN, page: () => LoginPage()),
       GetPage(name: SIGNUP, page: () => SignUpPage()),
       GetPage(name: HOMEPAGE, page: () => AdminHomePage()),
-      GetPage(name: SUBSCRIPTION, page: () => SubscriptionPage()),
       GetPage(name: PACKAGES, page: () => Packages()),
       GetPage(name: DASHBOARD, page: () => Dashboard()),
       GetPage(name: FORUM, page: () => ForumPage()),

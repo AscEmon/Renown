@@ -55,9 +55,17 @@ class _SplashPageState extends State<SplashPage> {
 
   void navigationPage() async {
     try {
-      bool loginstatus=userprefs.getBool("loginStatus");
-      bool userNew=userprefs.getBool("isNewCheck");
-      (loginstatus==true && userMap['role']=="admin")?Get.offAndToNamed(AppRoutes.HOMEPAGE): (loginstatus==true && userMap['role']=="user" && userNew ==false)?Get.offAndToNamed(AppRoutes.USERHOMEPAGE):loginstatus==null?Get.offAndToNamed(AppRoutes.LOGIN):Get.offAndToNamed(AppRoutes.LOGIN);
+      bool loginstatus = userprefs.getBool("loginStatus");
+      bool userNew = userprefs.getBool("isNewCheck");
+      (loginstatus == true && userMap['role'] == "admin")
+          ? Get.offAndToNamed(AppRoutes.HOMEPAGE)
+          : (loginstatus == true &&
+                  userMap['role'] == "user" &&
+                  userNew == false)
+              ? Get.offAndToNamed(AppRoutes.USERHOMEPAGE)
+              : loginstatus == null
+                  ? Get.offAndToNamed(AppRoutes.LOGIN)
+                  : Get.offAndToNamed(AppRoutes.LOGIN);
     } catch (e) {
       print(e.toString());
     }

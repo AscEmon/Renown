@@ -16,16 +16,15 @@ class Packages extends StatefulWidget {
 }
 
 class _PackagesState extends State<Packages> {
-  final CarouselController _controller = CarouselController();
   final UserPackagesController _userPackagesController = Get.put(
-      UserPackagesController(
-          repository:
-              MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
-  int indexResult = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
+    UserPackagesController(
+      repository: MyRepository(
+        apiClient: MyApiClient(
+          httpClient: http.Client(),
+        ),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +51,10 @@ class _PackagesState extends State<Packages> {
         child: Obx(
           () {
             return _userPackagesController.isLoading.value == true
-                ? Align(
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.white,
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.black,
                     ),
-                    alignment: Alignment.topCenter,
                   )
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,8 +78,9 @@ class _PackagesState extends State<Packages> {
                               i++)
                             Container(
                               child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25.0)),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(25.0),
+                                ),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
@@ -123,22 +122,24 @@ class _PackagesState extends State<Packages> {
                                                   radius: 8,
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    50))),
+                                                      color: Colors.green,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(50),
+                                                      ),
+                                                    ),
                                                   ),
                                                 )
                                               : CircleAvatar(
                                                   radius: 8,
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        color: Colors.grey,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    50))),
+                                                      color: Colors.grey,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(50),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                         ],
@@ -243,11 +244,16 @@ class _PackagesState extends State<Packages> {
                                       RaisedButton(
                                         color: Colors.white,
                                         child: Text(
-                                     userMap['package'] !=null  ? userMap['package']['id']  == _userPackagesController
-                                              .packagesList
-                                              .value
-                                              .result[i]
-                                              .id ? "Renew":"SUBSCRIPTION" :"SUBSCRIPTION",
+                                          userMap['package'] != null
+                                              ? userMap['package']['id'] ==
+                                                      _userPackagesController
+                                                          .packagesList
+                                                          .value
+                                                          .result[i]
+                                                          .id
+                                                  ? "Renew"
+                                                  : "SUBSCRIPTION"
+                                              : "SUBSCRIPTION",
                                           style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
@@ -267,21 +273,15 @@ class _PackagesState extends State<Packages> {
                                               .value
                                               .result[i]
                                               .duration;
-                                          Get.offAndToNamed(AppRoutes.PAYMENTVIEWPAGE,
-                                              arguments: [
-                                                amount,
-                                                pId,
-                                                userId,
-                                                duration
-                                              ]);
-                                          // print(amount.toString());
-                                          // print(pId.toString());
-                                          // print(userId.toString());
-                                          // _userPackagesController
-                                          //     .sendSubscription(
-                                          //         amount.toString(),
-                                          //         pId.toString(),
-                                          //         userId.toString());
+                                          Get.offAndToNamed(
+                                            AppRoutes.PAYMENTVIEWPAGE,
+                                            arguments: [
+                                              amount,
+                                              pId,
+                                              userId,
+                                              duration
+                                            ],
+                                          );
                                         },
                                       ),
                                     ],

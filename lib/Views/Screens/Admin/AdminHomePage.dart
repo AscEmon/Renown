@@ -28,19 +28,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
           repository:
               MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
 
-    // Timer.periodic(
-    //   Duration(seconds: 10),
-    //   (Timer timer) {
-    //     print("hey bro");
-    //     print(timer);
-    //   },
-    // );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +94,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
             child: Obx(
               () {
                 return adminVideoController.isLoading.value == true
-                    ? Align(
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.white,
-                        ),
-                        alignment: Alignment.topCenter,
-                      )
+                    ? Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    )
                     : ListView.builder(
                         itemCount:
                             adminVideoController.videoList.value.result.length,
@@ -209,14 +197,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
                                   ),
                                 ),
                               ),
-                              // Positioned(
-                              //   top: 4,
-                              //   child: Image.asset(
-                              //     'images/premium.png',
-                              //     height: 22,
-                              //     width: 22,
-                              //   ),
-                              // ),
                             ],
                           );
                         },

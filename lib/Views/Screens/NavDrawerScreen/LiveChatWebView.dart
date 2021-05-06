@@ -67,9 +67,9 @@ class _LiveChatWebViewState extends State<LiveChatWebView> {
                 Expanded(
                   child: Container(
                     child: InAppWebView(
-                      //initialHeaders: MyApiClient.header2(),
-                      initialUrl: AppUrl.liveChatUserUrl +
-                          "?user_id=${userMap['data']['id']}",
+                      
+                      initialUrl:userMap['role'] == 'user'?AppUrl.liveChatUserUrl +
+                          "?user_id=${userMap['data']['id']}":AppUrl.adminChatUrl,
                       initialOptions: InAppWebViewGroupOptions(
                         crossPlatform: InAppWebViewOptions(
                             useOnDownloadStart: true,
@@ -92,23 +92,7 @@ class _LiveChatWebViewState extends State<LiveChatWebView> {
                             clearSessionCache: true,
                             supportMultipleWindows: true),
                       ),
-                      // onWebViewCreated: (InAppWebViewController controller) {
-                      //   _webViewController = controller;
-                      //   _webViewController.addJavaScriptHandler(
-                      //       handlerName: 'handlerFoo',
-                      //       callback: (args) {
-                      //         // return data to JavaScript side!
-                      //         return {'bar': 'bar_value', 'baz': 'baz_value'};
-                      //       });
-
-                      //   _webViewController.addJavaScriptHandler(
-                      //       handlerName: 'handlerFooWithArgs',
-                      //       callback: (args) {
-                      //         print(args);
-                      //         // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
-                      //       });
-
-                      // },
+                     
                       onWebViewCreated: (InAppWebViewController controller) {
                         _webViewController = controller;
 
@@ -143,10 +127,7 @@ class _LiveChatWebViewState extends State<LiveChatWebView> {
                           },
                         );
                         print("onLoadStart" + url);
-                        // if(url.contains("https://work.mshakhawat.com/"))
-                        // {
-                        //   Get.offAndToNamed(AppRoutes.USERHOMEPAGE);
-                        // }
+                      
                       },
                       androidOnPermissionRequest:
                           (controller, origin, resources) async {
@@ -169,23 +150,7 @@ class _LiveChatWebViewState extends State<LiveChatWebView> {
                             value.crossPlatform.debuggingEnabled = true;
                           },
                         );
-                        // Timer.periodic(
-                        //   Duration(seconds: 10),
-                        //   (Timer timer) async {
-                        //     await controller.reload();
-                        //   },
-                        // );
-
-                        // var webMessageChannel = await controller.getMetaTags();
-                        // var port1 = webMessageChannel
-                        // var port2 = webMessageChannel.port2;
-
-                        // // set the web message callback for the port1
-                        // await port1.setWebMessageCallback((message) async {
-                        //   print("Message coming from the JavaScript side: $message");
-                        //   // when it receives a message from the JavaScript side, respond back with another message.
-                        //  // await port1.postMessage(WebMessage(data: message! + " and back"));
-                        // });
+                      
                       },
                       shouldOverrideUrlLoading:
                           (controller, shouldOverrideUrlLoadingRequest) async {

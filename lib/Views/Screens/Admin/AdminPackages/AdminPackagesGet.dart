@@ -76,11 +76,10 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
           child: Obx(
             () {
               return adminPackageController.isLoading.value == true
-                  ? Align(
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.white,
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
                       ),
-                      alignment: Alignment.topCenter,
                     )
                   : Container(
                       child: ListView.builder(
