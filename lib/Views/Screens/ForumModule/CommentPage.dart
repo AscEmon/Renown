@@ -1,4 +1,5 @@
 import 'package:TrainnigInfo/Controller/forumController.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,13 @@ class CommentPage extends StatefulWidget {
 class _CommentPageState extends State<CommentPage> {
   final ForumController _forumController = Get.find<ForumController>();
   var id;
+  var name;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    id = Get.arguments;
+    id = Get.arguments[0];
+    name = Get.arguments[1];
     _forumController.commentGet(id);
   }
 
@@ -63,6 +66,26 @@ class _CommentPageState extends State<CommentPage> {
                                     child: SingleChildScrollView(
                                       child: Column(
                                         children: [
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  name,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Divider(
+                                            height: 2,
+                                            color: Colors.black,
+                                          ),
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
@@ -141,11 +164,38 @@ class _CommentPageState extends State<CommentPage> {
                                                     left: 16),
                                                 child: Row(
                                                   children: [
-                                                    Icon(
-                                                      Icons.comment,
-                                                      color: Colors.black,
-                                                      size: 30,
-                                                    ),
+                                                    userMap['role'] == "user"
+                                                        ? Icon(
+                                                            Icons.comment,
+                                                            color: Colors.black,
+                                                            size: 30,
+                                                          )
+                                                        : InkWell(
+                                                            onTap: () {
+                                                              _forumController.deleteComment(
+                                                                  _forumController
+                                                                      .commentList
+                                                                      .value
+                                                                      .result
+                                                                      .reply[
+                                                                          index]
+                                                                      .id
+                                                                      .toString(),
+                                                                  _forumController
+                                                                      .commentList
+                                                                      .value
+                                                                      .result
+                                                                      .reply[
+                                                                          index]
+                                                                      .user
+                                                                      .id
+                                                                      .toString());
+                                                            },
+                                                            child: Icon(
+                                                              Icons.delete,
+                                                              color: Colors.red,
+                                                              size: 30,
+                                                            )),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
@@ -169,6 +219,28 @@ class _CommentPageState extends State<CommentPage> {
                                                                     CrossAxisAlignment
                                                                         .start,
                                                                 children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                          _forumController
+                                                                        .commentList
+                                                                        .value
+                                                                        .result
+                                                                        .reply[index]
+                                                                        .user
+                                                                        .name,
+                                                                          style: TextStyle(
+                                                                        color: Colors.black,
+                                                                        fontSize: 14,
+                                                                        fontWeight: FontWeight.bold),
+                                                                        )
+                                                                    ],
+                                                                  ),
+                                                                  Divider(
+                                                                    height: 2,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
                                                                   Text(
                                                                     _forumController
                                                                         .commentList
@@ -232,8 +304,6 @@ class _CommentPageState extends State<CommentPage> {
       onConfirm: () {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         _forumController.replyPostFunction(id.toString());
-        _forumController.commentGet(id);
-        _forumController.update();
         Get.back(canPop: true);
       },
     );

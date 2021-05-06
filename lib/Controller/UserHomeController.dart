@@ -1,14 +1,14 @@
-import 'package:TrainnigInfo/Model/TodayModel.dart';
+import 'package:TrainnigInfo/Model/UserHomePageModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TodayController extends GetxController {
+class UserHomeController extends GetxController {
   MyRepository repository;
-  TodayController({@required this.repository});
+  UserHomeController({@required this.repository});
   var isLoading = true.obs;
-  var todayVideoList = TodayModel().obs;
+  var userVideoList = UserHomePageModel().obs;
 
   @override
   void onInit() {
@@ -38,9 +38,9 @@ class TodayController extends GetxController {
   void fetchTodayVideo() async {
     try {
       isLoading(true);
-      var videos = await repository.todayVideo();
+      var videos = await repository.userHomePage();
       if (videos != null) {
-        todayVideoList(videos);
+        userVideoList(videos);
       }
     } finally {
       isLoading(false);

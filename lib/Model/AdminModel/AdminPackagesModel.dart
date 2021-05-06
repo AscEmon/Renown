@@ -36,6 +36,7 @@ class Result {
         this.image,
         this.description,
         this.active,
+        this.duration,
         this.createdAt,
         this.updatedAt,
     });
@@ -46,6 +47,7 @@ class Result {
     String image;
     String description;
     String active;
+    String duration;
     DateTime createdAt;
     DateTime updatedAt;
 
@@ -56,6 +58,7 @@ class Result {
         image: json["image"],
         description: json["description"],
         active: json["active"],
+        duration: json["duration"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
     );
@@ -67,6 +70,7 @@ class Result {
         "image": image,
         "description": description,
         "active": active,
+        "duration": duration,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };

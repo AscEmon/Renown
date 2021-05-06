@@ -2,6 +2,7 @@ import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 import 'package:TrainnigInfo/Controller/forumController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -107,11 +108,17 @@ class _PostVisiblePageState extends State<PostVisiblePage> {
                                           onTap: () {
                                             print("Pressed");
                                             Get.toNamed(AppRoutes.COMMENTPAGE,
-                                                arguments: _forumController
+                                                arguments: [_forumController
                                                     .forumList
                                                     .value
                                                     .result[index]
-                                                    .id);
+                                                    .id,
+                                                    _forumController
+                                                    .forumList
+                                                    .value
+                                                    .result[index]
+                                                    .user.name]
+                                                    );
                                           },
                                           child: Container(
                                             height: Get.height / 24,
@@ -150,14 +157,36 @@ class _PostVisiblePageState extends State<PostVisiblePage> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                        Positioned(
+                                      Positioned(
                                         top: 30,
                                         left: 26,
                                         child: Container(
-                                        height: 2,
-                                        width: Get.width/1.19,
-                                        color: Colors.black,)
+                                          height: 2,
+                                          width: Get.width / 1.19,
+                                          color: Colors.black,
+                                        ),
                                       ),
+                                      userMap["role"] == "user"
+                                          ? Text("")
+                                          : Positioned(
+                                              top: 0,
+                                              right: 20,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  _forumController.deleteForum(
+                                                      _forumController
+                                                          .forumList
+                                                          .value
+                                                          .result[index]
+                                                          .id);
+                                                },
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),

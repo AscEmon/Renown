@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:TrainnigInfo/Model/AdminDashboardModel.dart';
-import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
-import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminDashboardModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminPackagesModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminVideoModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/TotalUserModel.dart';
 import 'package:TrainnigInfo/Model/CommentModel.dart';
 import 'package:TrainnigInfo/Model/ForumModel.dart';
-import 'package:TrainnigInfo/Model/PreeviousActivity.dart';
+import 'package:TrainnigInfo/Model/PreviousActivityModel.dart';
 import 'package:TrainnigInfo/Model/SingUpModel.dart';
-import 'package:TrainnigInfo/Model/TodayModel.dart';
-import 'package:TrainnigInfo/Model/TotalUserModel.dart';
+import 'package:TrainnigInfo/Model/UserHomePageModel.dart';
 import 'package:TrainnigInfo/Model/UserPackagesModel.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppUrl.dart';
@@ -39,6 +39,8 @@ class MyApiClient {
         'Authorization': 'Bearer ${userMap["access_token"]}',
         'auth_id': '${userMap["data"]["id"]}'
       };
+
+  //this is the header where user token and id is store but key name is user_id
   static header4() => {
         'Accept': 'application/json',
         'Authorization': 'Bearer ${userMap["access_token"]}',
@@ -176,7 +178,9 @@ class MyApiClient {
   //Forum Status   GET  Api Calling
   statusGet() async {
     try {
-      var response = await httpClient.get(AppUrl.forumUrl, headers: header2());
+      var response = await httpClient.get(
+          userMap['role'] == "user" ? AppUrl.forumUrl : AppUrl.adminForumUrl,
+          headers: header2());
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
       if (response.statusCode == 200) {
         print("Forum Status Get");
@@ -196,8 +200,11 @@ class MyApiClient {
   //Comment GET  Api Calling
   commentGet(var id) async {
     try {
-      var response =
-          await httpClient.get(AppUrl.commentUrl + "/$id", headers: header2());
+      var response = await httpClient.get(
+          userMap['role'] == "user"
+              ? AppUrl.commentUrl + "/$id"
+              : AppUrl.adminCommentUrl + "/$id",
+          headers: header2());
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
       if (response.statusCode == 200) {
         print("Comment Get");
@@ -253,7 +260,10 @@ class MyApiClient {
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
         userMap = jsonDecode(responseString);
-        GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
+        userprefs.setBool("isNewCheck", userMap['isNew']);
+        userMap["role"] == "user"
+            ? GETX.Get.offAndToNamed(AppRoutes.PACKAGES)
+            : GETX.Get.offAndToNamed(AppRoutes.HOMEPAGE);
         return singUpModelFromJson(responseString);
       } else {
         print(response.statusCode);
@@ -286,6 +296,7 @@ class MyApiClient {
         userprefs.setBool("loginStatus", true);
         userprefs.setString("userInfos", responseString);
         userMap = jsonDecode(responseString);
+        userprefs.setBool("isNewCheck", userMap['isNew']);
         return true;
       } else if (response.statusCode == 401) {
         print(response.statusCode);
@@ -334,7 +345,7 @@ class MyApiClient {
 
 //this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Controller
   Future<bool> adminPackagesPost(String title, String price, String description,
-      String active, File image) async {
+      String active, String durationDropDn, File image) async {
     print("apiProvider adminPackages");
 
     try {
@@ -345,6 +356,7 @@ class MyApiClient {
           "price": price,
           "description": description,
           "active": active,
+          "duration": durationDropDn,
           "image": await MultipartFile.fromFile(
             image.path,
           ),
@@ -374,13 +386,14 @@ class MyApiClient {
 
 //this is for AdminPCkages APi where title, price ,description,active and image are come from AdminPackages Controller
   Future<bool> adminPackagesModifyPut(var id, String title, String price,
-      String description, String active, File image) async {
+      String description, String active, var duration, File image) async {
     print("apiProvider adminPackagesModify Put");
     print(id);
     print(title);
     print(price);
     print(description);
     print(active);
+    print(duration);
     print(image.path);
 
     try {
@@ -392,12 +405,14 @@ class MyApiClient {
                 "price": price,
                 "description": description,
                 "active": active,
+                "duration": duration
               }
             : {
                 "title": title,
                 "price": price,
                 "description": description,
                 "active": active,
+                "duration": duration,
                 "image": await MultipartFile.fromFile(
                   image.path,
                 ),
@@ -426,14 +441,14 @@ class MyApiClient {
     return null;
   }
 
-  //TodaVideo for user HomePage
-  Future<TodayModel> todayVideo() async {
-    print("apiProvider todayVideo");
+  //UserHomePage  for user HomePage where user can see today video
+  Future<UserHomePageModel> userHomePage() async {
+    print("apiProvider userHomePage");
     print(userMap["access_token"]);
     try {
       http.Response response;
       response = await http.post(
-        AppUrl.todayActivityUrl,
+        AppUrl.userHomePageUrl,
         headers: header2(),
       );
       print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
@@ -446,7 +461,7 @@ class MyApiClient {
         print(response.body);
       }
     } catch (e) {
-      print("todayVideo ::: ${e.toString()}");
+      print("userHomePage ::: ${e.toString()}");
     }
     return null;
   }
@@ -571,31 +586,7 @@ class MyApiClient {
     return null;
   }
 
-//User Subscription Api is calling which is come from UserSubsCription Controller
-  Future<bool> userSubscription(var amonut, var pId, var uId) async {
-    print("apiProvider userSubscription");
-    print(userMap["access_token"]);
-    try {
-      final response = await httpClient.post(
-        AppUrl.userSubscriptionUrl,
-        headers: header2(),
-        body: {"amount": amonut, "package_id ": pId, "auth_id": uId},
-      );
-      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
-      String responseString;
-      if (response.statusCode == 200) {
-        responseString = response.body;
-        print(responseString);
-        return true;
-      } else {
-        print(response.statusCode);
-        print(response.body);
-      }
-    } catch (e) {
-      print("userSubscription ::: ${e.toString()}");
-    }
-    return null;
-  }
+
 
   //Status is post by using this function
   Future<bool> statusPost(String status) async {
@@ -744,5 +735,54 @@ class MyApiClient {
     } catch (e) {
       print("deleteAdminVideo ::: ${e.toString()}");
     }
+  }
+
+//Delete Forum Api Calling using there id which is controller from ForumController
+  deleteForum(var id) async {
+    try {
+      var response = await httpClient.get(AppUrl.adminForumDeleteUrl + "/$id",
+          headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Forum $id is Deleted");
+        print(response.body);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Post",
+            backgroundColor: Colors.green, colorText: Colors.white);
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        GETX.Get.snackbar("Error", "Something is Happend",
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+    } catch (e) {
+      print("deleteForum ::: ${e.toString()}");
+    }
+  }
+
+  //Delete Comment Api Calling using there id which is controller from ForumController
+  Future<bool> deleteComment(var id) async {
+    print("reply id " + id.toString());
+    try {
+      var response = await httpClient.get(
+          AppUrl.adminCommentDeleteUrl + "/${id.toString()}",
+          headers: header2());
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Comment $id is Deleted");
+        print(response.body);
+        GETX.Get.snackbar("Delete", "Sucessfully Deleted the Comment",
+            backgroundColor: Colors.green, colorText: Colors.white);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+        GETX.Get.snackbar("Error", "Something is Happend",
+            colorText: Colors.white, backgroundColor: Colors.red);
+        return false;
+      }
+    } catch (e) {
+      print("deleteComment ::: ${e.toString()}");
+    }
+    return null;
   }
 }

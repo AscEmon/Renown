@@ -1,5 +1,5 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Controller/AdminVideoController.dart';
+import 'package:TrainnigInfo/Controller/AdminController/AdminVideoController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:TrainnigInfo/Views/Utilities/NavDrawer.dart';
@@ -7,17 +7,21 @@ import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import '../Widget/VideoItem.dart';
 import 'package:http/http.dart' as http;
+import 'package:TrainnigInfo/Views/Widget/VideoItem.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+
+
+
+
+class AdminHomePage extends StatefulWidget {
+  AdminHomePage({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _AdminHomePageState createState() => _AdminHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   Duration timerTastoPremuto;
   final AdminVideoController adminVideoController = Get.put(
       AdminVideoController(

@@ -1,4 +1,4 @@
-import 'package:TrainnigInfo/Model/PreeviousActivity.dart';
+import 'package:TrainnigInfo/Model/PreviousActivityModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';

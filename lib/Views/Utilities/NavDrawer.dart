@@ -160,7 +160,7 @@ class _NavDrawerState extends State<NavDrawer> {
                           navIcon: Icons.chat,
                           navTitle: 'Live Chat',
                           onNavPress: () {
-                            Get.toNamed(AppRoutes.ADMINPACKAGESGET);
+                            Get.toNamed(AppRoutes.LIVECHATWEBVIEW);
                           },
                         ),
                         NavDrawerTile(

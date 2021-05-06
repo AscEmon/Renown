@@ -1,10 +1,8 @@
-import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Model/UserPackagesModel.dart';
-import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
+
+import'package:TrainnigInfo/Model/UserPackagesModel.dart';
 import 'package:flutter/material.dart';
 import '../Repository/MyRepository.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 
 class UserPackagesController extends GetxController {
   UserPackagesController({@required this.repository});
@@ -32,24 +30,5 @@ class UserPackagesController extends GetxController {
     }
   }
 
-  sendSubscription(var amount, var pId, var uId) {
-    isInternet().then(
-      (internet) async {
-        if (internet == true) {
-          await repository.userSubscriptionPost(amount, pId, uId);
-        } else {
-          Get.defaultDialog(
-            title: "Internet Problem",
-            content: Image.asset(
-              "images/NoInternet_ic.png",
-            ),
-            buttonColor: Colors.black,
-            onConfirm: () {
-              Get.back();
-            },
-          );
-        }
-      },
-    );
-  }
+  
 }

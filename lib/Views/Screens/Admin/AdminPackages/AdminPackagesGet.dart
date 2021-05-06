@@ -1,5 +1,5 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Controller/AdminPackageController.dart';
+import 'package:TrainnigInfo/Controller/AdminController/AdminPackageController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/AppRoutes.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +36,7 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                     "NotEdit",
                     "NotEdit",
                     "NotEdit",
+                    "NotEdit"
                   ],
                 );
               },
@@ -99,6 +100,8 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                               .description;
                           String image = adminPackageController
                               .adminPackagesList.value.result[index].image;
+                          var  duration = adminPackageController
+                              .adminPackagesList.value.result[index].duration;
                           bool activeStatus = adminPackageController
                                       .adminPackagesList
                                       .value
@@ -151,7 +154,8 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                                                 description,
                                                 activeStatus,
                                                 image,
-                                                id
+                                                id,
+                                                duration
                                               ],
                                             );
                                           },
@@ -236,6 +240,15 @@ class _AdminPackagesGetState extends State<AdminPackagesGet> {
                                                       .value
                                                       .result[index]
                                                       .price,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                             Text(
+                                              "Duration : " +
+                                                  adminPackageController
+                                                      .adminPackagesList
+                                                      .value
+                                                      .result[index]
+                                                      .duration,
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Text(

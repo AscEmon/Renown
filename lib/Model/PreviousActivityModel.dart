@@ -41,18 +41,18 @@ class Data {
 
     bool status;
     bool subscription;
-    Map<String, List<History>> history;
+    List<History> history;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         status: json["status"],
         subscription: json["subscription"],
-        history: Map.from(json["history"]).map((k, v) => MapEntry<String, List<History>>(k, List<History>.from(v.map((x) => History.fromJson(x))))),
+        history: List<History>.from(json["history"].map((x) => History.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "subscription": subscription,
-        "history": Map.from(history).map((k, v) => MapEntry<String, dynamic>(k, List<dynamic>.from(v.map((x) => x.toJson())))),
+        "history": List<dynamic>.from(history.map((x) => x.toJson())),
     };
 }
 

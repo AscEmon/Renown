@@ -35,7 +35,7 @@ class LogInController extends GetxController {
                   Get.back(closeOverlays: true);
                   userMap["role"] == "admin"
                       ? Get.offAndToNamed(AppRoutes.HOMEPAGE)
-                      : Get.offAndToNamed(AppRoutes.TODAYSACTIVITY);
+                      :userMap["isNew"] == false ? Get.offAndToNamed(AppRoutes.USERHOMEPAGE): Get.offAndToNamed(AppRoutes.PACKAGES);
                   emailLogin.clear();
                   passwordLogin.clear();
                   adminCheck = false;

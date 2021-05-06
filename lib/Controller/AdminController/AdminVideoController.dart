@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:TrainnigInfo/Model/AdminVideoModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminVideoModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:file_picker/file_picker.dart';

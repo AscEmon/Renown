@@ -1,9 +1,10 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
 import 'package:TrainnigInfo/Controller/forumController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
+import 'package:TrainnigInfo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 
 class StatusPage extends StatefulWidget {
   StatusPage({Key key}) : super(key: key);
@@ -13,17 +14,17 @@ class StatusPage extends StatefulWidget {
 }
 
 class _StatusPageState extends State<StatusPage> {
-
-   final ForumController _forumController = Get.put(ForumController( repository:
+  final ForumController _forumController = Get.put(ForumController(
+      repository:
           MyRepository(apiClient: MyApiClient(httpClient: http.Client()))));
-          @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _forumController.replyTextController.clear();
     _forumController.forumTextController.clear();
   }
-     
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,7 +52,11 @@ class _StatusPageState extends State<StatusPage> {
                   padding: const EdgeInsets.all(16.0),
                   child: InkWell(
                     onTap: () {
-                     _forumController.statusPostFunction();
+                      userMap['role'] == "user"
+                          ? _forumController.statusPostFunction()
+                          : Get.defaultDialog(
+                              title: "Unsupported",
+                              middleText: "Admin Post is not possible");
                     },
                     child: Card(
                       elevation: 8,
@@ -79,6 +84,4 @@ class _StatusPageState extends State<StatusPage> {
       ),
     );
   }
-
-
 }

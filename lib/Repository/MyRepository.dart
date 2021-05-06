@@ -35,10 +35,18 @@ class MyRepository {
     return apiClient.commentGet(id);
   }
 
+  deleteForum(var id) {
+    return apiClient.deleteForum(id);
+  }
+
+  deleteComment(var id) {
+    return apiClient.deleteComment(id);
+  }
+
   adminPackagesModifyPut(var id, String title, String price, String description,
-      String active, File image) {
+      String active, var duration, File image) {
     return apiClient.adminPackagesModifyPut(
-        id, title, price, description, active, image);
+        id, title, price, description, active, duration, image);
   }
 
   statusUpdateAdminPackages(var id) {
@@ -79,17 +87,14 @@ class MyRepository {
         packageId, startImg, endImg, pubLish, video);
   }
 
-  todayVideo() {
-    return apiClient.todayVideo();
+  userHomePage() {
+    return apiClient.userHomePage();
   }
 
   previousActivity() {
     return apiClient.previousActivityGet();
   }
 
-  userSubscriptionPost(var amonut, var pId, var uId) {
-    return apiClient.userSubscription(amonut, pId, uId);
-  }
 
   statusPost(String status) {
     return apiClient.statusPost(status);
@@ -104,9 +109,9 @@ class MyRepository {
   }
 
   adminPackages(String title, String price, String description, String active,
-      File image) {
+      String durationDropDn, File image) {
     return apiClient.adminPackagesPost(
-        title, price, description, active, image);
+        title, price, description, active, durationDropDn, image);
   }
 
   deleteAdminPackages(var id) {

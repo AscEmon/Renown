@@ -1,6 +1,6 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Controller/AdminPackageController.dart';
-import 'package:TrainnigInfo/Controller/AdminVideoController.dart';
+import 'package:TrainnigInfo/Controller/AdminController/AdminPackageController.dart';
+import 'package:TrainnigInfo/Controller/AdminController/AdminVideoController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

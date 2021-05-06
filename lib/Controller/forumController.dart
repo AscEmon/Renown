@@ -116,7 +116,8 @@ class ForumController extends GetxController {
             await repository.replyPost(replyTextController.text, forumId).then(
               (replyPost) {
                 if (replyPost == true) {
-                  replyTextController.text= "";
+                  commentGet(forumId);
+                  replyTextController.text = "";
                   update();
                 } else {
                   Get.snackbar("Error", "Something is Occured");
@@ -138,6 +139,24 @@ class ForumController extends GetxController {
         },
       );
     } else {}
+    update();
+  }
+
+//Delete the Forum using there id by Admin
+  deleteForum(var id) async {
+    await repository.deleteForum(id);
+    fetchForumStatus();
+    update();
+  }
+
+//Delete the Comment using there id by Admin
+  deleteComment(var replyid,var id) async {
+    await repository.deleteComment(replyid.toString()).then((delete) {
+      if (delete==true) {
+        commentGet(id);
+      }
+    });
+
     update();
   }
 

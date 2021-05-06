@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:TrainnigInfo/Model/AdminPackagesModel.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminPackagesModel.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,14 @@ class AdminPackageController extends GetxController {
 
   var isLoading = true.obs;
   var adminPackagesList = AdminPackagesModel().obs;
+  String durationDropDn;
+  Map dropDpwnShow = {
+    "": "",
+    '1': 'Monthly',
+    '3': 'Quarterly',
+    '6': 'Half Yearly',
+    '12': 'Yearly'
+  };
   @override
   void onInit() {
     // TODO: implement onInit
@@ -60,6 +68,14 @@ class AdminPackageController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  //Duration Drop Down on changed Method
+  onchangedDurationDropDn(durationDrp, BuildContext context) {
+    FocusScope.of(context).unfocus();
+    durationDropDn = durationDrp;
+    print(durationDropDn);
+    update();
   }
 
   imgFromCamera() async {
@@ -131,12 +147,13 @@ class AdminPackageController extends GetxController {
         price.text.isNotEmpty &&
         description.text.isNotEmpty &&
         activeText.isNotEmpty &&
+        durationDropDn != null &&
         profile != null) {
       isInternet().then(
         (internet) async {
           if (internet == true) {
             bool packgesPost = await repository.adminPackages(title.text,
-                price.text, description.text, activeText, File(profile.path));
+                price.text, description.text, activeText, durationDropDn, File(profile.path));
             if (packgesPost == true) {
               Get.snackbar("Packages", "Packages Post Successfully",
                   snackPosition: SnackPosition.BOTTOM,
@@ -148,6 +165,7 @@ class AdminPackageController extends GetxController {
               active = false;
               profile = null;
               activeText = "";
+              durationDropDn = "";
               FocusScope.of(context).unfocus();
               update();
             } else {
@@ -204,6 +222,7 @@ class AdminPackageController extends GetxController {
             price.text,
             description.text,
             editActiveStatus.value,
+            durationDropDn,
             profile == null ? File("false") : File(profile.path),
           );
           if (packgesPost == true) {

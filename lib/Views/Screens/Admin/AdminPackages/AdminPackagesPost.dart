@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Controller/AdminPackageController.dart';
+import 'package:TrainnigInfo/Controller/AdminController/AdminPackageController.dart';
 import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +25,7 @@ class _AdminPackagesState extends State<AdminPackages> {
   var activeStatus = Get.arguments[4];
   String image = Get.arguments[5];
   var id = Get.arguments[6];
+  var duration = Get.arguments[7];
 
   @override
   void initState() {
@@ -42,8 +43,12 @@ class _AdminPackagesState extends State<AdminPackages> {
     edit == "edit"
         ? adminPackageController.image.value = image
         : print("nothing");
+
     edit == "edit"
         ? adminPackageController.editActiveStatusbool.value = activeStatus
+        : print("nothing");
+    edit == "edit"
+        ? adminPackageController.durationDropDn = duration
         : print("nothing");
   }
 
@@ -243,6 +248,55 @@ class _AdminPackagesState extends State<AdminPackages> {
                                     },
                                   )
                           ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60,
+                      width: Get.width,
+                      child: ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 9),
+                          child: Text(
+                            "Duration",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        trailing: Container(
+                          height: 20,
+                          width: 100,
+                          child: GetBuilder<AdminPackageController>(
+                            builder: (adminPackageController) {
+                              return DropdownButton(
+                                isExpanded: true,
+                                items: adminPackageController.dropDpwnShow.keys
+                                    .map(
+                                  (values) {
+                                    return DropdownMenuItem(
+                                      value: values,
+                                      child: Text(
+                                        "${adminPackageController.dropDpwnShow[values]}",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                value: adminPackageController.durationDropDn,
+                                underline: SizedBox(),
+                                onChanged: (valueSelectedByUser) {
+                                  setState(() {
+                                    FocusScope.of(context).unfocus();
+                                  });
+                                  adminPackageController
+                                      .onchangedDurationDropDn(
+                                          valueSelectedByUser, context);
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

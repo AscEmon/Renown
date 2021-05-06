@@ -1,12 +1,13 @@
 import 'package:TrainnigInfo/ApiProvider/ApiProvider.dart';
-import 'package:TrainnigInfo/Model/TotalUserModel.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/TotalUser.dart';
+import 'package:TrainnigInfo/Model/AdminModel/TotalUserModel.dart';
 import 'package:TrainnigInfo/Views/Utilities/Check_connectivity.dart';
 import 'package:flutter/material.dart';
-import '../Model/AdminDashboardModel.dart';
-import '../Repository/MyRepository.dart';
+import 'package:TrainnigInfo/Model/AdminModel/AdminDashboardModel.dart';
+import 'package:TrainnigInfo/Repository/MyRepository.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+
+
 
 class AdminDashBoardController extends GetxController {
   final MyRepository repository =

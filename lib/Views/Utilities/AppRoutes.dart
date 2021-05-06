@@ -1,17 +1,19 @@
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesGet.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminPackages/AdminPackagesPost.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/AdminVideo/AdminVideoPost.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/Dashboard.dart';
+import 'package:TrainnigInfo/Views/Screens/Admin/AdminPackages/AdminPackagesGet.dart';
+import 'package:TrainnigInfo/Views/Screens/Admin/AdminPackages/AdminPackagesPost.dart';
+import 'package:TrainnigInfo/Views/Screens/Admin/AdminVideo/AdminVideoPost.dart';
+import 'package:TrainnigInfo/Views/Screens/Admin/Dashboard.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/StatusPage.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/Admin/TotalUser.dart';
+import 'package:TrainnigInfo/Views/Screens/Admin/TotalUser.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/LiveChatWebView.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/PreviousActivity.dart';
-import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/TodaysActivity.dart';
+import 'package:TrainnigInfo/Views/Screens/PaymentWebView.dart';
+import 'package:TrainnigInfo/Views/Screens/UserHomePage.dart';
 import 'package:TrainnigInfo/Views/Screens/PicturePage.dart';
 import 'package:TrainnigInfo/Views/Screens/SubscriptionPage.dart';
 import 'package:get/get.dart';
-import '../../Views/Screens/HomePage.dart';
+import '../../Views/Screens/Admin/AdminHomePage.dart';
 import '../../Views/Screens/LoginPage.dart';
 import '../../Views/Screens/SignUpPage.dart';
 import '../../Views/Screens/SplashPage.dart';
@@ -21,10 +23,10 @@ class AppRoutes {
   static String INITIAL = "/";
   static String LOGIN = "LoginPage";
   static String SIGNUP = "SignUpPage";
-  static String HOMEPAGE = "HomePage";
+  static String HOMEPAGE = "AdminHomePage";
   static String SUBSCRIPTION = "Subscription";
   static String PACKAGES = "Packages";
-  static String LIVECHAT = "LiveChat";
+  static String LIVECHATWEBVIEW = "LiveChatWebView";
   static String DASHBOARD = "Dashboard";
   static String FORUM = "Forum";
   static String STATUS = "Status";
@@ -36,7 +38,7 @@ class AppRoutes {
   static String ADMINVIDEOPOST = "AdminVideoPost";
   static String PAYMENTVIEWPAGE = "PaymentViewPage";
   static String WEBVIEWPAYMENTDATAPAGE = "PaymentDataPage";
-  static String TODAYSACTIVITY = "TodaysActivity";
+  static String USERHOMEPAGE = "UserHomePage";
   static String PREVIOUSACTIVITY = "PreviousActivity";
 
   static List<GetPage> AppRoutesList() {
@@ -44,10 +46,9 @@ class AppRoutes {
       GetPage(name: INITIAL, page: () => SplashPage()),
       GetPage(name: LOGIN, page: () => LoginPage()),
       GetPage(name: SIGNUP, page: () => SignUpPage()),
-      GetPage(name: HOMEPAGE, page: () => HomePage()),
+      GetPage(name: HOMEPAGE, page: () => AdminHomePage()),
       GetPage(name: SUBSCRIPTION, page: () => SubscriptionPage()),
       GetPage(name: PACKAGES, page: () => Packages()),
-      //GetPage(name: LIVECHAT, page: () => WebSocketDemo()),
       GetPage(name: DASHBOARD, page: () => Dashboard()),
       GetPage(name: FORUM, page: () => ForumPage()),
       GetPage(name: STATUS, page: () => StatusPage()),
@@ -57,8 +58,10 @@ class AppRoutes {
       GetPage(name: ADMINPACKAGESGET, page: () => AdminPackagesGet()),
       GetPage(name: TOTALUSER, page: () => TotalUser()),
       GetPage(name: ADMINVIDEOPOST, page: () => AdminVideoPost()),
-      GetPage(name: TODAYSACTIVITY, page: () => TodaysActivity()),
+      GetPage(name: USERHOMEPAGE, page: () => UserHomePage()),
       GetPage(name: PREVIOUSACTIVITY, page: () => PreviousActivity()),
+      GetPage(name: PAYMENTVIEWPAGE, page: () => PaymentWebView()),
+      GetPage(name: LIVECHATWEBVIEW, page: () => LiveChatWebView()),
     ];
   }
 }
