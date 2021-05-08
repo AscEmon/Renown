@@ -25,11 +25,11 @@ class AppUrl {
   static String previousActivityUrl = "$baseUrl/auth/history";
   static String startingImageUrl = "$baseUrl/auth/up/startingimage";
   static String endingImageUrl = "$baseUrl/auth/up/endingingimage";
+  static String changePasswordUserUrl = "$baseUrl/auth/change/password";
+  static String changePasswordAdminUrl = "$baseUrl/admin/change/password";
 
   //Webview
   static String subscriptionUrl = "$baseUrl/mobile/payment";
   static String liveChatUserUrl = "$baseUrl/userchat";
   static String adminChatUrl = "$baseUrl/adminchat";
-
-  
 }

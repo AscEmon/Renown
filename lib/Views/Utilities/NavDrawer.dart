@@ -86,6 +86,13 @@ class _NavDrawerState extends State<NavDrawer> {
                            Get.toNamed(AppRoutes.LIVECHATWEBVIEW);
                           },
                         ),
+                         NavDrawerTile(
+                          navIcon: Icons.lock,
+                          navTitle: 'Change Password',
+                          onNavPress: () {
+                           Get.toNamed(AppRoutes.CHANGEPASSWORD);
+                          },
+                        ),
                         NavDrawerTile(
                           navIcon: Icons.logout,
                           navTitle: 'Logout',
@@ -136,6 +143,13 @@ class _NavDrawerState extends State<NavDrawer> {
                           navTitle: 'Live Chat',
                           onNavPress: () {
                             Get.toNamed(AppRoutes.LIVECHATWEBVIEW);
+                          },
+                        ),
+                         NavDrawerTile(
+                          navIcon: Icons.lock,
+                          navTitle: 'Change Passsword',
+                          onNavPress: () {
+                           Get.toNamed(AppRoutes.CHANGEPASSWORD);
                           },
                         ),
                         NavDrawerTile(

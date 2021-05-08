@@ -67,6 +67,11 @@ class MyRepository {
     return apiClient.logOutPost();
   }
 
+  changePasswordPost(String oldPassword, String password) {
+    print(oldPassword);
+    return apiClient.changePasswordPost(oldPassword, password);
+  }
+
   adminVideoPost(String title, String price, String description, var packageId,
       String startImg, String endImg, String pubLish, File video) {
     return apiClient.adminVideoPost(
@@ -94,7 +99,6 @@ class MyRepository {
   previousActivity() {
     return apiClient.previousActivityGet();
   }
-
 
   statusPost(String status) {
     return apiClient.statusPost(status);

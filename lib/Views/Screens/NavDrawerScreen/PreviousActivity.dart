@@ -34,7 +34,7 @@ class _PreviousActivityState extends State<PreviousActivity> {
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.black,
           title: Text(
-            "Previos Activity",
+            "Previous Activity",
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),

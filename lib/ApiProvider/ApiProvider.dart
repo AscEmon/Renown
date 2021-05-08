@@ -586,8 +586,6 @@ class MyApiClient {
     return null;
   }
 
-
-
   //Status is post by using this function
   Future<bool> statusPost(String status) async {
     try {
@@ -689,6 +687,40 @@ class MyApiClient {
       }
     } catch (e) {
       print("imgSent ${e.toString()}");
+    }
+    return null;
+  }
+
+  //Change Password  api Calling for both admin and User where value are come from ChangePassword Controller
+  Future<bool> changePasswordPost(String oldPassword, String password) async {
+    print("api Provider");
+    print(oldPassword);
+    print(password);
+    try {
+      final response = await httpClient.post(
+        userMap["role"] == "user"
+            ? AppUrl.changePasswordUserUrl
+            : AppUrl.changePasswordAdminUrl,
+        headers: header2(),
+        body: {
+          "old_password": oldPassword,
+          "new_password": password,
+          "confirm_new_password": password
+        },
+      );
+      print("This is StatusCode in APIPROVIDER:: ${response.statusCode}");
+      String responseString;
+      if (response.statusCode == 200) {
+        print("Done ChangePassword ");
+        responseString = response.body;
+        print(responseString);
+        return true;
+      } else {
+        print(response.statusCode);
+        print(response.body);
+      }
+    } catch (e) {
+      print("changePasswordPost ::: ${e.toString()}");
     }
     return null;
   }

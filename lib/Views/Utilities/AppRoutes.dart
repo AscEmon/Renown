@@ -6,6 +6,7 @@ import 'package:TrainnigInfo/Views/Screens/ForumModule/CommentPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/FoumPage.dart';
 import 'package:TrainnigInfo/Views/Screens/ForumModule/StatusPage.dart';
 import 'package:TrainnigInfo/Views/Screens/Admin/TotalUser.dart';
+import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/ChangePasswordPage.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/LiveChatWebView.dart';
 import 'package:TrainnigInfo/Views/Screens/NavDrawerScreen/PreviousActivity.dart';
 import 'package:TrainnigInfo/Views/Screens/PaymentWebView.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static String WEBVIEWPAYMENTDATAPAGE = "PaymentDataPage";
   static String USERHOMEPAGE = "UserHomePage";
   static String PREVIOUSACTIVITY = "PreviousActivity";
+  static String CHANGEPASSWORD = "ChangePassword";
 
   static List<GetPage> AppRoutesList() {
     return [
@@ -60,6 +62,7 @@ class AppRoutes {
       GetPage(name: PREVIOUSACTIVITY, page: () => PreviousActivity()),
       GetPage(name: PAYMENTVIEWPAGE, page: () => PaymentWebView()),
       GetPage(name: LIVECHATWEBVIEW, page: () => LiveChatWebView()),
+      GetPage(name: CHANGEPASSWORD, page: () => ChangePasswordPage()),
     ];
   }
 }
